@@ -1,0 +1,714 @@
+Lab 2a Configuration :-
+==========================
+
+1) RHEL Server 7.3 installation Done 
+	username :- admin 
+	password :- techmlab2
+	
+	root pw :- techmlab2
+	
+	Hostname :- techmlab2-common 
+	
+2) IP Address assignment - Internet access
+
+yum install xorg-x11-xauth xorg-x11-fonts-* xorg-x11-utils
+
+virt-install \
+   --name=guest1-rhel5-64 \
+   --file=/var/lib/libvirt/images/guest1-rhel5-64.dsk \
+   --file-size=8 \
+   --nonsparse --graphics spice \
+   --vcpus=2 --ram=2048 \
+   --location=http://192.168.122.1/ \
+   --network bridge=br0 \
+   --os-type=linux \
+   --os-variant=rhel5.4
+   
+   
+   virt-install --name rhel_test --vcpus 2 --ram 1024 --disk path=/lab2guest --network bridge:br0 --arch i686 -l nfs://192.168.122.1/lab2guest/images/ 
+   
+   virt-install \
+--name rhel \
+--ram 1024 \
+--disk path=/lab2guest/freebsd10.qcow2,size=8 \
+--vcpus 1 \
+--os-type generic \
+--os-variant generic \
+--network bridge=virbr0 \
+--graphics vnc,port=5999 \
+--console pty,target_type=serial \
+--cdrom /var/lib/libvirt/images/rhel-server-7.3-x86_64-boot.iso \
+
+
+[stack@director-lab2a ~]$ openstack baremetal import --json ~/instackenv.json
+Started Mistral Workflow. Execution ID: 5e02769e-7769-444e-876d-e34c3eb0975f
+Successfully registered node UUID 494a8b01-d476-4c66-ad42-30083296839a
+Successfully registered node UUID 06152355-0e0a-4769-8b0f-9311e394fd39
+Started Mistral Workflow. Execution ID: c3e215ec-d95e-4c21-b5d2-423fddda84d3
+Successfully set all nodes to available.
+
+
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+--------------------+---------------+-------------+--------------------+-------------+
+| UUID                                 | Name               | Instance UUID | Power State | Provisioning State | Maintenance |
++--------------------------------------+--------------------+---------------+-------------+--------------------+-------------+
+| 494a8b01-d476-4c66-ad42-30083296839a | Compute-Lab2A-1    | None          | power off   | clean failed       | True        |
+| 06152355-0e0a-4769-8b0f-9311e394fd39 | Controller-Lab2A-0 | None          | power off   | clean failed       | True        |
++--------------------------------------+--------------------+---------------+-------------+--------------------+-------------+
+
+[stack@director-lab2a ~]$ for node in $(openstack baremetal node list -c UUID -f value) ; do openstack baremetal node manage $node ; done
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+--------------------+---------------+-------------+--------------------+-------------+
+| UUID                                 | Name               | Instance UUID | Power State | Provisioning State | Maintenance |
++--------------------------------------+--------------------+---------------+-------------+--------------------+-------------+
+| 494a8b01-d476-4c66-ad42-30083296839a | Compute-Lab2A-1    | None          | power off   | manageable         | True        |
+| 06152355-0e0a-4769-8b0f-9311e394fd39 | Controller-Lab2A-0 | None          | power off   | manageable         | True        |
++--------------------------------------+--------------------+---------------+-------------+--------------------+-------------+
+
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+--------------------+---------------+-------------+--------------------+-------------+
+| UUID                                 | Name               | Instance UUID | Power State | Provisioning State | Maintenance |
++--------------------------------------+--------------------+---------------+-------------+--------------------+-------------+
+| 494a8b01-d476-4c66-ad42-30083296839a | Compute-Lab2A-1    | None          | power on    | manageable         | True        |
+| 06152355-0e0a-4769-8b0f-9311e394fd39 | Controller-Lab2A-0 | None          | power on    | manageable         | True        |
++--------------------------------------+--------------------+---------------+-------------+--------------------+-------------+
+
+==========
+[stack@director-lab-2a ~]$ date
+Thu Jun  8 14:34:54 EDT 2017
+[stack@director-lab-2a ~]$ history
+    1  mkdir ~/images
+    2   mkdir ~/templates
+    3  ls -ltr
+    4  hostname
+    5  hostname -f
+    6  sudo hostnamectl set-hostname director-lab-2A
+    7  sudo hostnamectl set-hostname --transient director-lab-2A
+    8  sudo subscription-manager list --available --all
+    9  sudo subscription-manager attach --pool=8a85f981573415180157364a52273a3a
+   10  sudo subscription-manager repos --disable=*
+   11  sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms --enable=
+rhel-ha-for-rhel-7-server-rpms --enable=rhel-7-server-openstack-10-rpms
+   12  sudo subscription-manager --enable=rhel-7-server-openstack-10-rpms
+   13  route -n
+   14  sudo subscription-manager repos --enable=rhel-7-server-openstack-10-rpms
+   15  sudo subscription-manager list --available --all | grep openstack
+   16  sudo subscription-manager list --available --all
+   17  ping 8.8.8.8
+   18  sudo subscription-manager list --available --all
+   19  sudo subscription-manager list --available --all | grep openstac
+   20  sudo subscription-manager list --available --all
+   21  sudo subscription-manager repos --enable=rhel-7-server-openstack-10-rpms
+   22  sudo subscription-manager attach --auto
+   23  sudo subscription-manager
+   24  sudo subscription-manager list --available --all | grep openstack
+   25  sudo subscription-manager list --available --all | grep open
+   26  sudo subscription-manager repos --enable=rhel-7-server-openstack-10-rpms
+   27  sudo subscription-manager repos --enable=rhel-7-server-openstack-10-rpm*
+   28  sudo subscription-manager repos --enable=rhel-7-server-openstack-*
+   29  sudo subscription-manager list --available --all
+   30  sudo subscription-manager attach --pool=8a85f98158de227b0158ded4cadc1c4d
+   31  sudo subscription-manager repos --disable=*
+   32  sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms --enable=rhel-ha-for-rhel-7-server-rpms --enable=rhel-7-server-openstack-10-rpms
+   33  sudo yum update -y
+   34  sudo reboot
+   35  vi undercloud.conf
+   36  openstack undercloud install
+   37  ls -ltr
+   38  vi undercloud-passwords.conf
+   39  sudo systemctl list-units openstack-*
+   40  source ~/stackrc
+   41  nova
+   42  heat
+   43  neutron
+   44  neutron agent-list
+   45  pwd
+   46  ls -ltr
+   47  cd templates/
+   48  ls -ltr
+   49  cd ../
+   50  pwd
+   51  ls -ltr
+   52  vi usr/share/instack-undercloud/undercloud.conf.sample
+   53  su - root
+
+   ===================
+   
+   for node in $(openstack baremetal node list -c UUID -f value) ; do openstack baremetal node manage $node ; done
+
+for i in {1..100}; do openstack baremetal node list; done
+
+ktenzer# cd /home/ktenzer/VirtualMachines
+ktenzer# for i in {1..2}; do qemu-img create -f qcow2 -o preallocation=metadata Controller_Lab2A.qcow2 160G; done
+ktenzer# for i in {1..2}; do virt-install --ram 4096 --vcpus 4 --os-variant rhel7 --disk path=/home/ktenzer/VirtualMachines/overcloud-node$i.qcow2,device=disk,bus=virtio,format=qcow2 --noautoconsole --vnc --network network:provisioning --network network:overcloud --name overcloud-node$i --cpu SandyBridge,+vmx --dry-run --print-xml > /tmp/overcloud-node$i.xml; virsh define --file /tmp/overcloud-node$i.xml; done
+
+qemu-img create -f qcow2 -o preallocation=metadata /lab2guest/Controller_Lab2A.qcow2 100G
+
+qemu-img create -f qcow2 -o preallocation=metadata /lab2guest/Compute_Lab2A_1.qcow2 100G
+
+qemu-img create -f qcow2 -o preallocation=metadata /lab2guest/Director_Lab2A.qcow2 160G
+
+qemu-img create -f qcow2 -o preallocation=metadata /lab2guest/Contrail_Lab2A.qcow2 160G
+
+qemu-img create -f qcow2 -o preallocation=metadata /lab2guest/Contrail_Ubuntu_Lab2A.qcow2 160G
+
+virt-install --ram 16384 --vcpus 16 --os-variant rhel7 --disk path=/lab2guest/Director_Lab2A.qcow2,device=disk,bus=virtio,format=qcow2 --noautoconsole --vnc --network network:lab2a_prov --network network:default --name Director-Lab2A --disk path=/root/rhel-server-7.0-x86_64-dvd.iso,device=cdrom --dry-run --print-xml > /tmp/Director-Lab2A.xml; virsh define --file /tmp/Director-Lab2A.xml
+
+virt-install --ram 16384 --vcpus 16 --os-variant rhel7 --disk path=/lab2guest/Controller_Lab2A.qcow2,device=disk,bus=virtio,format=qcow2 --noautoconsole --vnc --network network:lab2a_prov --network network:lab2a_ext --name Controller_Lab2A --dry-run --print-xml > /tmp/Controller-Lab2A.xml; virsh define --file /tmp/Controller-Lab2A.xml
+
+virt-install --ram 8192 --vcpus 8 --os-variant rhel7 --disk path=/lab2guest/Compute_Lab2A_1.qcow2,device=disk,bus=virtio,format=qcow2 --noautoconsole --vnc --network network:lab2a_prov --network network:lab2a_ext --name Compute_Lab2A_1 --dry-run --print-xml > /tmp/Compute_Lab2A_1.xml; virsh define --file /tmp/Compute_Lab2A_1.xml
+
+virt-install --ram 16384 --vcpus 16 --os-variant rhel7 --disk path=/lab2guest/Contrail_Lab2A.qcow2,device=disk,bus=virtio,format=qcow2 --noautoconsole --vnc --network network:lab2a_prov --network network:lab2a_ext --network network:default --name Contrail-Lab2A --disk path=/var/lib/libvirt/images/rhel-server-7.0-x86_64-dvd.iso,device=cdrom --dry-run --print-xml > /tmp/Contrail-Lab2A.xml; virsh define --file /tmp/Contrail-Lab2A.xml
+
+virt-install --ram 16384 --vcpus 16 --os-variant rhel7 --disk path=/lab2guest/Contrail_Ubuntu_Lab2A.qcow2,device=disk,bus=virtio,format=qcow2 --noautoconsole --vnc --network network:lab2a_prov --network network:lab2a_ext --network network:default --name Contrail-Ubuntu-Lab2A --disk path=/var/lib/libvirt/images/ubuntu-16.04.2-server-amd64.iso,device=cdrom --dry-run --print-xml > /tmp/Contrail-Ubunutu-Lab2A.xml; virsh define --file /tmp/Contrail-Ubuntu-Lab2A.xml
+
+virsh -c qemu+ssh://stack@192.168.166.1/system domiflist Controller_Lab2A | awk '$3 == "mgmt" {print $5};'; done > /tmp/nodes.txt
+
+
+[stack@director-lab2a ~]$ virsh -c qemu+ssh://stack@192.168.166.1/system domiflist Controller_Lab2A
+Interface  Type       Source     Model       MAC
+-------------------------------------------------------
+-          network    lab2a_prov virtio      52:54:00:02:b9:67
+-          network    lab2a_ext  virtio      52:54:00:7b:18:fc
+
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$ virsh -c qemu+ssh://stack@192.168.166.1/system domiflist Compute_Lab2A_1
+Interface  Type       Source     Model       MAC
+-------------------------------------------------------
+-          network    lab2a_prov virtio      52:54:00:11:a1:ef
+-          network    lab2a_ext  virtio      52:54:00:01:5d:f9
+
+
+
+{
+  "ssh-user": "stack",
+  "ssh-key": "$(cat ~/.ssh/id_rsa)",
+  "power_manager": "nova.virt.baremetal.virtual_power_driver.VirtualPowerManager",
+  "host-ip": "192.168.166.1",
+  "arch": "x86_64",
+  "nodes": [
+    {
+      "pm_addr": "192.168.166.1",
+      "pm_password": "$(cat ~/.ssh/id_rsa)",
+      "pm_type": "pxe_ssh",
+      "mac": [
+        "52:54:00:02:b9:67"
+      ],
+      "cpu": "16",
+      "memory": "16384",
+      "disk": "100",
+      "arch": "x86_64",
+      "pm_user": "stack",
+	  "name": "controller-1"
+    },
+    {
+      "pm_addr": "192.168.166.1",
+      "pm_password": "$(cat ~/.ssh/id_rsa)",
+      "pm_type": "pxe_ssh",
+      "mac": [
+        "52:54:00:11:a1:ef"
+      ],
+      "cpu": "8",
+      "memory": "8192",
+      "disk": "100",
+      "arch": "x86_64",
+      "pm_user": "stack",
+	  "name": "compute-0"
+    }
+  ] 
+} 
+
+[stack@director-lab2a ~]$ python instackenv-validator.py -f instackenv.json
+INFO:__main__:Checking node 192.168.166.1
+DEBUG:__main__:Identified virtual node
+INFO:__main__:Checking node 192.168.166.1
+DEBUG:__main__:Identified virtual node
+DEBUG:__main__:Baremetal IPs are all unique.
+DEBUG:__main__:MAC addresses are all unique.
+
+--------------------
+SUCCESS: instackenv validator found 0 errors
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$ openstack baremetal import --json ~/instackenv.json
+Started Mistral Workflow. Execution ID: 12bc844c-bf44-43dc-bc35-8e5b17e9db7e
+Successfully registered node UUID fab8fb3b-3006-40eb-9e6b-29e098da4b38
+Successfully registered node UUID af410706-df7f-44be-8217-e4064134c323
+Started Mistral Workflow. Execution ID: 9a950671-6c05-433a-81d0-c239669ca4a1
+Successfully set all nodes to available.
+[stack@director-lab2a ~]$  openstack baremetal configure boot
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+--------------+---------------+-------------+--------------------+-------------+
+| UUID                                 | Name         | Instance UUID | Power State | Provisioning State | Maintenance |
++--------------------------------------+--------------+---------------+-------------+--------------------+-------------+
+| fab8fb3b-3006-40eb-9e6b-29e098da4b38 | controller-1 | None          | power off   | available          | False       |
+| af410706-df7f-44be-8217-e4064134c323 | compute-0    | None          | power off   | available          | False       |
++--------------------------------------+--------------+---------------+-------------+--------------------+-------------+
+
+[stack@director-lab2a ~]$ for node in $(openstack baremetal node list -c UUID \
+> -f value) ; do openstack baremetal node manage $node ; done
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+--------------+---------------+-------------+--------------------+-------------+
+| UUID                                 | Name         | Instance UUID | Power State | Provisioning State | Maintenance |
++--------------------------------------+--------------+---------------+-------------+--------------------+-------------+
+| fab8fb3b-3006-40eb-9e6b-29e098da4b38 | controller-1 | None          | power off   | manageable         | False       |
+| af410706-df7f-44be-8217-e4064134c323 | compute-0    | None          | power off   | manageable         | False       |
++--------------------------------------+--------------+---------------+-------------+--------------------+-------------+
+
+[stack@director-lab2a ~]$ openstack overcloud node introspect --all-manageable \
+> --provide
+Started Mistral Workflow. Execution ID: e2fdddae-be13-45cc-9838-eefb44955c1b
+Waiting for introspection to finish...
+Introspection for UUID af410706-df7f-44be-8217-e4064134c323 finished successfully.
+Introspection for UUID fab8fb3b-3006-40eb-9e6b-29e098da4b38 finished successfully.
+Introspection completed.
+Started Mistral Workflow. Execution ID: 89f7b24e-8652-47ec-a8d0-b2b770a6d708
+
+[stack@director-lab2a ~]$ openstack baremetal node set --property capabilities='profile:compute,boot_option:local' af410706-df7f-44be-8217-e4064134c323
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$ openstack baremetal node set --property capabilities='profile:control,boot_option:local' fab8fb3b-3006-40eb-9e6b-29e098da4b38
+
+[stack@director-lab2a ~]$ openstack overcloud profiles list
++--------------------------------------+--------------+-----------------+-----------------+-------------------+
+| Node UUID                            | Node Name    | Provision State | Current Profile | Possible Profiles |
++--------------------------------------+--------------+-----------------+-----------------+-------------------+
+| fab8fb3b-3006-40eb-9e6b-29e098da4b38 | controller-1 | available       | control         |                   |
+| af410706-df7f-44be-8217-e4064134c323 | compute-0    | available       | compute         |                   |
++--------------------------------------+--------------+-----------------+-----------------+-------------------+
+
+sudo journalctl -l -u openstack-ironic-inspector -u openstack-ironicinspector-dnsmasq -u openstack-ironic-conductor -f
+
+openstack overcloud deploy --templates --control-scale 1 --compute-scale 1 --neutron-tunnel-types vxlan --neutron-network-type vxlan
+
+2017-07-08 00:06:08Z [overcloud]: CREATE_COMPLETE  Stack CREATE completed successfully
+
+ Stack overcloud CREATE_COMPLETE
+
+/home/stack/.ssh/known_hosts updated.
+Original contents retained as /home/stack/.ssh/known_hosts.old
+Overcloud Endpoint: http://192.168.168.141:5000/v2.0
+Overcloud Deployed
+
+
+[stack@director-lab2a ~]$ nova list
++--------------------------------------+------------------------+--------+------------+-------------+--------------------------+
+| ID                                   | Name                   | Status | Task State | Power State | Networks                 |
++--------------------------------------+------------------------+--------+------------+-------------+--------------------------+
+| 54c8dd28-099c-48ad-9cdf-68f5e6fc4a85 | overcloud-compute-0    | ACTIVE | -          | Running     | ctlplane=192.168.168.143 |
+| a08d06a1-1f8c-413e-94e2-f7bf5716145f | overcloud-controller-0 | ACTIVE | -          | Running     | ctlplane=192.168.168.135 |
++--------------------------------------+------------------------+--------+------------+-------------+--------------------------+
+
+
+
+52:54:00:f9:5f:4f
+
+[DEFAULT]
+ local_ip = 192.168.168.1/24
+ undercloud_public_vip = 192.168.168.10
+ undercloud_admin_vip = 192.168.168.11
+ local_interface = eth1
+ masquerade_network = 192.168.168.0/24
+ dhcp_start = 192.168.168.100
+ dhcp_end = 192.168.168.120
+ network_cidr = 192.168.168.0/24
+ network_gateway = 192.168.168.1
+ discovery_iprange = 192.168.168.130,192.168.168.150
+ 
+ os-refresh-config completed successfully
+Generated new ssh key in ~/.ssh/id_rsa
+Created flavor "baremetal" with profile "None"
+Created flavor "control" with profile "control"
+Created flavor "compute" with profile "compute"
+Created flavor "ceph-storage" with profile "ceph-storage"
+Created flavor "block-storage" with profile "block-storage"
+Created flavor "swift-storage" with profile "swift-storage"
+
+#############################################################################
+Undercloud install complete.
+
+The file containing this installation's passwords is at
+/home/stack/undercloud-passwords.conf.
+
+There is also a stackrc file at /home/stack/stackrc.
+
+These files are needed to interact with the OpenStack services, and should be
+secured.
+
+#############################################################################
+
+
+
+[stack@director-lab2a ~]$ sudo virsh -c qemu+ssh://stack@192.168.122.1/system domiflist Controller_Lab2A
+^C[stack@director-lab2a ~]$ sudo virsh -c qemu+ssh://stack@192.168.166.1/system domiflist Controller_Lab2A
+The authenticity of host '192.168.166.1 (192.168.166.1)' can't be established.
+ECDSA key fingerprint is cc:f0:38:99:59:2d:92:b9:89:c9:e5:e0:a4:f3:e8:bc.
+Are you sure you want to continue connecting (yes/no)? yes
+stack@192.168.166.1's password:
+Interface  Type       Source     Model       MAC
+-------------------------------------------------------
+-          network    Internal   virtio      52:54:00:89:1b:9e
+-          network    External   virtio      52:54:00:e0:d0:d1
+
+
+[root@techmlab2-common images]# virsh domiflist Contrail_Ubuntu_Lab2A
+Interface  Type       Source     Model       MAC
+-------------------------------------------------------
+vnet13     network    default    virtio      52:54:00:77:1b:67
+vnet14     network    lab2a_ext  virtio      52:54:00:03:c3:b6
+vnet15     network    lab2a_prov virtio      52:54:00:06:aa:53
+
+
+[stack@director-lab2a ~]$ curl -O https://raw.githubusercontent.com/rthallisey/clapper/master/instackenv-validator.py
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  3182  100  3182    0     0  13219      0 --:--:-- --:--:-- --:--:-- 13313
+[stack@director-lab2a ~]$ python instackenv-validator.py -f instackenv.json
+INFO:__main__:Checking node 192.168.166.1
+DEBUG:__main__:Identified virtual node
+DEBUG:__main__:Baremetal IPs are all unique.
+DEBUG:__main__:MAC addresses are all unique.
+
+--------------------
+SUCCESS: instackenv validator found 0 errors
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$ openstack baremetal import --json instackenv.json
+Missing value auth-url required for auth plugin password
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$ source stackrc
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$ openstack baremetal import --json instackenv.json
+Started Mistral Workflow. Execution ID: 6ef73fdc-52a7-4b08-82aa-605ee3de87dd
+Successfully registered node UUID 6f05f9f8-8902-4dcf-a594-66680669cd55
+Started Mistral Workflow. Execution ID: 2b57eca4-cb1d-4357-87b1-72e6873c45f6
+Successfully set all nodes to available.
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+| UUID                                 | Name | Instance UUID | Power State | Provisioning State | Maintenance |
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+| 6f05f9f8-8902-4dcf-a594-66680669cd55 | None | None          | power off   | available          | False       |
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+
+[stack@director-lab2a ~]$ openstack baremetal configure boot
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+| UUID                                 | Name | Instance UUID | Power State | Provisioning State | Maintenance |
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+| 6f05f9f8-8902-4dcf-a594-66680669cd55 | None | None          | power off   | available          | False       |
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+
+[stack@director-lab2a ~]$ openstack baremetal node show 6f05f9f8-8902-4dcf-a594-66680669cd55
++------------------------+--------------------------------------------------------------------------------------------------------------------------+
+| Field                  | Value                                                                                                                    |
++------------------------+--------------------------------------------------------------------------------------------------------------------------+
+| console_enabled        | False                                                                                                                    |
+| created_at             | 2017-06-16T05:40:17+00:00                                                                                                |
+| driver                 | pxe_ssh                                                                                                                  |
+| driver_info            | {u'ssh_username': u'stack', u'deploy_kernel': u'0cf28223-8ad6-4857-b12b-afa9062e5df9', u'deploy_ramdisk':                |
+|                        | u'8e482b07-40b0-4661-8a15-5e8c1871466a', u'ssh_key_contents': u'******', u'ssh_virt_type': u'virsh', u'ssh_address':     |
+|                        | u'192.168.166.1'}                                                                                                        |
+| driver_internal_info   | {}                                                                                                                       |
+| extra                  | {}                                                                                                                       |
+| inspection_finished_at | None                                                                                                                     |
+| inspection_started_at  | None                                                                                                                     |
+| instance_info          | {}                                                                                                                       |
+| instance_uuid          | None                                                                                                                     |
+| last_error             | None                                                                                                                     |
+| maintenance            | False                                                                                                                    |
+| maintenance_reason     | None                                                                                                                     |
+| name                   | None                                                                                                                     |
+| ports                  | [{u'href': u'http://192.168.168.1:6385/v1/nodes/6f05f9f8-8902-4dcf-a594-66680669cd55/ports', u'rel': u'self'}, {u'href': |
+|                        | u'http://192.168.168.1:6385/nodes/6f05f9f8-8902-4dcf-a594-66680669cd55/ports', u'rel': u'bookmark'}]                     |
+| power_state            | power off                                                                                                                |
+| properties             | {u'memory_mb': u'16384', u'cpu_arch': u'x86_64', u'local_gb': u'160', u'cpus': u'16', u'capabilities':                   |
+|                        | u'boot_option:local'}                                                                                                    |
+| provision_state        | available                                                                                                                |
+| provision_updated_at   | 2017-06-16T05:40:28+00:00                                                                                                |
+| reservation            | None                                                                                                                     |
+| target_power_state     | None                                                                                                                     |
+| target_provision_state | None                                                                                                                     |
+| updated_at             | 2017-06-16T05:41:28+00:00                                                                                                |
+| uuid                   | 6f05f9f8-8902-4dcf-a594-66680669cd55                                                                                     |
++------------------------+--------------------------------------------------------------------------------------------------------------------------+
+
+copy the kernal 
+
+[stack@director-lab2a ~]$ openstack image show 0cf28223-8ad6-4857-b12b-afa9062e5df9
++------------------+--------------------------------------+
+| Field            | Value                                |
++------------------+--------------------------------------+
+| checksum         | b380efa8dbe5537927fe28a1e7dfb97c     |
+| container_format | aki                                  |
+| created_at       | 2017-06-16T04:59:53.000000           |
+| deleted          | False                                |
+| disk_format      | aki                                  |
+| id               | 0cf28223-8ad6-4857-b12b-afa9062e5df9 |
+| is_public        | True                                 |
+| min_disk         | 0                                    |
+| min_ram          | 0                                    |
+| name             | bm-deploy-kernel                     |
+| owner            | 2dd0cf9a20ec4fa8bc78f343c9a4c26f     |
+| properties       |                                      |
+| protected        | False                                |
+| size             | 5394272                              |
+| status           | active                               |
+| updated_at       | 2017-06-16T04:59:54.000000           |
++------------------+--------------------------------------+
+
+[stack@director-lab2a ~]$ openstack image show 8e482b07-40b0-4661-8a15-5e8c1871466a
++------------------+--------------------------------------+
+| Field            | Value                                |
++------------------+--------------------------------------+
+| checksum         | 7667f21a5e0d6a9191619390dbb84e72     |
+| container_format | ari                                  |
+| created_at       | 2017-06-16T04:59:54.000000           |
+| deleted          | False                                |
+| disk_format      | ari                                  |
+| id               | 8e482b07-40b0-4661-8a15-5e8c1871466a |
+| is_public        | True                                 |
+| min_disk         | 0                                    |
+| min_ram          | 0                                    |
+| name             | bm-deploy-ramdisk                    |
+| owner            | 2dd0cf9a20ec4fa8bc78f343c9a4c26f     |
+| properties       |                                      |
+| protected        | False                                |
+| size             | 366559808                            |
+| status           | active                               |
+| updated_at       | 2017-06-16T04:59:58.000000           |
++------------------+--------------------------------------+
+
+openstack flavor create --id auto --ram 16384 --disk 158 --vcpus 16 baremetal
+
+[stack@director-lab2a ~]$ openstack baremetal introspection bulk start
+Setting nodes for introspection to manageable...
+Starting introspection of manageable nodes
+Started Mistral Workflow. Execution ID: 9864cb47-515e-4e92-a216-9dbf7f9ccd5c
+Waiting for introspection to finish...
+Introspection for UUID 6f05f9f8-8902-4dcf-a594-66680669cd55 finished successfully.
+Introspection completed.
+Setting manageable nodes to available...
+Started Mistral Workflow. Execution ID: e92211e7-9657-4da9-9fed-b36484720573
+
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+| UUID                                 | Name | Instance UUID | Power State | Provisioning State | Maintenance |
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+| 6f05f9f8-8902-4dcf-a594-66680669cd55 | None | None          | power off   | available          | False       |
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+
+[stack@director-lab2a ~]$ openstack baremetal introspection bulk start
+Setting nodes for introspection to manageable...
+Starting introspection of manageable nodes
+Started Mistral Workflow. Execution ID: 18caccdd-c98a-49ed-9d24-957c0886d510
+Waiting for introspection to finish...
+Introspection for UUID 6f05f9f8-8902-4dcf-a594-66680669cd55 finished successfully.
+Introspection completed.
+Setting manageable nodes to available...
+Started Mistral Workflow. Execution ID: 13c96cfa-edb0-42a9-945a-c5afdaaa53da
+
+
+[stack@director-lab2a ~]$  ironic node-list
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+| UUID                                 | Name | Instance UUID | Power State | Provisioning State | Maintenance |
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+| 6f05f9f8-8902-4dcf-a594-66680669cd55 | None | None          | power off   | available          | False       |
++--------------------------------------+------+---------------+-------------+--------------------+-------------+
+
+
+[stack@director-lab2a ~]$ openstack overcloud profiles list
++--------------------------------------+-----------+-----------------+-----------------+-------------------+
+| Node UUID                            | Node Name | Provision State | Current Profile | Possible Profiles |
++--------------------------------------+-----------+-----------------+-----------------+-------------------+
+| 6f05f9f8-8902-4dcf-a594-66680669cd55 |           | available       | control         |                   |
++--------------------------------------+-----------+-----------------+-----------------+-------------------+
+
+ openstack overcloud deploy --templates --control-scale 1 --compute-scale 1 --neutron-tunnel-types vxlan --neutron-network-type vxlan
+ 
+ 
+ 2017-06-17 01:41:11Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet]: CREATE_COMPLETE  Stack CREATE completed successfully
+2017-06-17 01:41:11Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet]: CREATE_COMPLETE  state changed
+2017-06-17 01:41:11Z [overcloud.AllNodesDeploySteps]: CREATE_COMPLETE  Stack CREATE completed successfully
+2017-06-17 01:41:12Z [overcloud.AllNodesDeploySteps]: CREATE_COMPLETE  state changed
+2017-06-17 01:41:12Z [overcloud]: CREATE_COMPLETE  Stack CREATE completed successfully
+
+ Stack overcloud CREATE_COMPLETE
+
+Started Mistral Workflow. Execution ID: f48841ab-4e6a-46ea-94c8-3019de4fc123
+/home/stack/.ssh/known_hosts updated.
+Original contents retained as /home/stack/.ssh/known_hosts.old
+Overcloud Endpoint: http://192.168.168.15:5000/v2.0
+Overcloud Deployed
+
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+------+--------------------------------------+-------------+--------------------+-------------+
+| UUID                                 | Name | Instance UUID                        | Power State | Provisioning State | Maintenance |
++--------------------------------------+------+--------------------------------------+-------------+--------------------+-------------+
+| 09a93456-c762-45ba-9167-73e0fea7a908 | None | 6682a462-7175-4e48-bda9-d98e9bff2e6a | power on    | active             | False       |
+| 5d742c17-979a-4aa7-97f0-141d5c3e760a | None | 787d322e-5ff9-4c02-8cf8-73af7f649096 | power on    | active             | False       |
++--------------------------------------+------+--------------------------------------+-------------+--------------------+-------------+
+
+
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+--------------+--------------------------------------+-------------+--------------------+-------------+
+| UUID                                 | Name         | Instance UUID                        | Power State | Provisioning State | Maintenance |
++--------------------------------------+--------------+--------------------------------------+-------------+--------------------+-------------+
+| 09a93456-c762-45ba-9167-73e0fea7a908 | compute-0    | 6682a462-7175-4e48-bda9-d98e9bff2e6a | power on    | active             | False       |
+| 5d742c17-979a-4aa7-97f0-141d5c3e760a | controller-0 | 787d322e-5ff9-4c02-8cf8-73af7f649096 | power on    | active             | False       |
+| 55d599b1-8961-4da8-83ea-f53007948ff8 | Compute_1    | 21cf810d-4732-40f2-85dd-ea6d2fb6eb40 | power on    | active             | False       |
+| cb43ab70-c500-486a-95a6-bf4acad94ae7 | Compute_2    | 885756cc-237b-4cb3-8328-7090d255aaa1 | power on    | wait call-back     | False       |
++--------------------------------------+--------------+--------------------------------------+-------------+--------------------+-------------+
+
+2017-06-23 02:03:26Z [overcloud-Compute-6mkjaorwdgzd.1]: UPDATE_COMPLETE  state changed
+2017-06-23 02:03:27Z [overcloud-Compute-6mkjaorwdgzd-0-xw6kc5e2p556]: UPDATE_COMPLETE  Stack UPDATE completed successfully
+2017-06-23 02:03:28Z [overcloud-Compute-6mkjaorwdgzd.0]: UPDATE_COMPLETE  state changed
+2017-06-23 02:03:32Z [overcloud-Controller-gy756osycsdo-0-jaxz2z67jz7c]: UPDATE_COMPLETE  Stack UPDATE completed successfully
+2017-06-23 02:03:33Z [overcloud-Controller-gy756osycsdo.0]: UPDATE_COMPLETE  state changed
+2017-06-23 02:03:33Z [overcloud-Controller-gy756osycsdo]: UPDATE_COMPLETE  Stack UPDATE completed successfully
+2017-06-23 02:03:34Z [Controller]: UPDATE_COMPLETE  state changed
+2017-06-23 02:03:34Z [ControllerIpListMap]: UPDATE_IN_PROGRESS  state changed
+2017-06-23 02:03:34Z [overcloud-ControllerIpListMap-adt5qoq3wb6i]: UPDATE_IN_PROGRESS  Stack UPDATE started
+2017-06-23 02:03:35Z [AllNodesValidationConfig]: UPDATE_IN_PROGRESS  state changed
+2017-06-23 02:03:35Z [overcloud-AllNodesValidationConfig-nbqgeewbfxwb]: UPDATE_IN_PROGRESS  Stack UPDATE started
+2017-06-23 02:03:35Z [overcloud-ControllerIpListMap-adt5qoq3wb6i]: UPDATE_COMPLETE  Stack UPDATE completed successfully
+2017-06-23 02:03:35Z [overcloud-AllNodesValidationConfig-nbqgeewbfxwb]: UPDATE_COMPLETE  Stack UPDATE completed successfully
+2017-06-23 02:03:36Z [ControllerIpListMap]: UPDATE_COMPLETE  state changed
+2017-06-23 02:03:36Z [AllNodesValidationConfig]: UPDATE_COMPLETE  state changed
+
+
+[stack@director-lab2a ~]$ openstack baremetal node list
++--------------------------------------+--------------+--------------------------------------+-------------+--------------------+-------------+
+| UUID                                 | Name         | Instance UUID                        | Power State | Provisioning State | Maintenance |
++--------------------------------------+--------------+--------------------------------------+-------------+--------------------+-------------+
+| 09a93456-c762-45ba-9167-73e0fea7a908 | compute-0    | 6682a462-7175-4e48-bda9-d98e9bff2e6a | power on    | active             | False       |
+| 5d742c17-979a-4aa7-97f0-141d5c3e760a | controller-0 | 787d322e-5ff9-4c02-8cf8-73af7f649096 | power on    | active             | False       |
+| 55d599b1-8961-4da8-83ea-f53007948ff8 | Compute_1    | 21cf810d-4732-40f2-85dd-ea6d2fb6eb40 | power on    | active             | False       |
+| cb43ab70-c500-486a-95a6-bf4acad94ae7 | Compute_2    | c76363e9-6ea5-4498-b265-9011f1cad8f5 | power off   | deploying          | False       |
++--------------------------------------+--------------+--------------------------------------+-------------+--------------------+-------------+
+
+2017-06-23 02:34:32Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: CREATE_FAILED  ResourceInError: resources.NovaCompute: Went to status ERROR due to "Message: No valid host was found. There are not enough hosts available., Code: 500"
+2017-06-23 02:34:32Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: DELETE_IN_PROGRESS  state changed
+2017-06-23 02:34:34Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: DELETE_COMPLETE  state changed
+2017-06-23 02:34:38Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: CREATE_IN_PROGRESS  state changed
+2017-06-23 02:34:39Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: CREATE_FAILED  ResourceInError: resources.NovaCompute: Went to status ERROR due to "Message: No valid host was found. There are not enough hosts available., Code: 500"
+2017-06-23 02:34:39Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: DELETE_IN_PROGRESS  state changed
+2017-06-23 02:34:41Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: DELETE_COMPLETE  state changed
+2017-06-23 02:34:46Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: CREATE_IN_PROGRESS  state changed
+2017-06-23 02:34:48Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: CREATE_FAILED  ResourceInError: resources.NovaCompute: Went to status ERROR due to "Message: No valid host was found. There are not enough hosts available., Code: 500"
+2017-06-23 02:34:48Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: DELETE_IN_PROGRESS  state changed
+2017-06-23 02:34:49Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: DELETE_COMPLETE  state changed
+2017-06-23 02:34:59Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: CREATE_IN_PROGRESS  state changed
+2017-06-23 02:35:01Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: CREATE_FAILED  ResourceInError: resources.NovaCompute: Went to status ERROR due to "Message: No valid host was found. There are not enough hosts available., Code: 500"
+2017-06-23 02:35:01Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: DELETE_IN_PROGRESS  state changed
+2017-06-23 02:35:02Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: DELETE_COMPLETE  state changed
+2017-06-23 02:35:20Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: CREATE_IN_PROGRESS  state changed
+2017-06-23 02:35:22Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: CREATE_FAILED  ResourceInError: resources.NovaCompute: Went to status ERROR due to "Message: No valid host was found. There are not enough hosts available., Code: 500"
+2017-06-23 02:35:22Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: DELETE_IN_PROGRESS  state changed
+2017-06-23 02:35:24Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: DELETE_COMPLETE  state changed
+2017-06-23 02:35:58Z [overcloud-Compute-6mkjaorwdgzd.2.NovaCompute]: CREATE_IN_PROGRESS  state changed
+
+
+2017-06-27 08:47:48Z [overcloud.AllNodesDeploySteps.ControllerExtraConfigPost]: CREATE_IN_PROGRESS  state changed
+2017-06-27 08:47:49Z [overcloud.AllNodesDeploySteps.ComputeExtraConfigPost]: CREATE_COMPLETE  state changed
+2017-06-27 08:47:49Z [overcloud.AllNodesDeploySteps.CephStorageExtraConfigPost]: CREATE_COMPLETE  state changed
+2017-06-27 08:47:49Z [overcloud.AllNodesDeploySteps.ObjectStorageExtraConfigPost]: CREATE_COMPLETE  state changed
+2017-06-27 08:47:49Z [overcloud.AllNodesDeploySteps.BlockStorageExtraConfigPost]: CREATE_COMPLETE  state changed
+2017-06-27 08:47:49Z [overcloud.AllNodesDeploySteps.ControllerExtraConfigPost]: CREATE_COMPLETE  state changed
+2017-06-27 08:47:49Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet]: CREATE_IN_PROGRESS  state changed
+2017-06-27 08:47:50Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet]: CREATE_IN_PROGRESS  Stack CREATE started
+2017-06-27 08:47:50Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet.ControllerPostPuppetMaintenanceModeConfig]: CREATE_IN_PROGRESS  state changed
+2017-06-27 08:47:50Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet.ControllerPostPuppetMaintenanceModeConfig]: CREATE_COMPLETE  state changed
+2017-06-27 08:47:50Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet.ControllerPostPuppetMaintenanceModeDeployment]: CREATE_IN_PROGRESS  state changed
+2017-06-27 08:48:22Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet.ControllerPostPuppetMaintenanceModeDeployment]: CREATE_COMPLETE  state changed
+2017-06-27 08:48:22Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet.ControllerPostPuppetRestart]: CREATE_IN_PROGRESS  state changed
+2017-06-27 08:48:55Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet.ControllerPostPuppetRestart]: CREATE_COMPLETE  state changed
+2017-06-27 08:48:55Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet]: CREATE_COMPLETE  Stack CREATE completed successfully
+2017-06-27 08:48:56Z [overcloud.AllNodesDeploySteps.ControllerPostPuppet]: CREATE_COMPLETE  state changed
+2017-06-27 08:48:56Z [overcloud.AllNodesDeploySteps]: CREATE_COMPLETE  Stack CREATE completed successfully
+2017-06-27 08:48:57Z [overcloud.AllNodesDeploySteps]: CREATE_COMPLETE  state changed
+2017-06-27 08:48:57Z [overcloud]: CREATE_COMPLETE  Stack CREATE completed successfully
+
+ Stack overcloud CREATE_COMPLETE
+
+Started Mistral Workflow. Execution ID: 8613143c-cea4-4222-a305-150e072cebde
+/home/stack/.ssh/known_hosts updated.
+Original contents retained as /home/stack/.ssh/known_hosts.old
+Overcloud Endpoint: http://192.168.168.15:5000/v2.0
+Overcloud Deployed
+
+
+Command stderr is: "" execute /usr/lib/python2.7/site-packages/ironic/common/utils.py:76
+
+
+[stack@director_lab2a ~]$ openstack overcloud deploy --templates --compute-scale 3
+Removing the current plan files
+Uploading new plan files
+Started Mistral Workflow. Execution ID: f1acd0e7-e227-42e3-993f-35660a41b550
+Plan updated
+Deploying templates in the directory /tmp/tripleoclient-onwQzu/tripleo-heat-templates
+Started Mistral Workflow. Execution ID: 53dd6111-d36a-41a0-bd80-c09d397e72ff
+
+	
+ovsdb-server /usr/local/etc/openvswitch/conf.db --remote=punix:/usr/local/var/run/openvswitch/db.sock --remote=db:Open_vSwitch,Open_vSwitch,manager_options --private-key=db:Open_vSwitch,SSL,private_key --certificate=db:Open_vSwitch,SSL,certificate --bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert --pidfile --detach --log-file
+
+
+sudo dpkg -P oracle-java7-installer
+sudo apt-get -f install
+
+root@lab2a-contrail-3:~# ifconfig | awk "/^vhost0 /{printline = 1; print; next} /bytes/ {printline = 0} printline"
+vhost0    Link encap:Ethernet  HWaddr 52:54:00:ff:88:5f
+          inet addr:192.168.168.252  Bcast:192.168.168.255  Mask:255.255.255.0
+          inet6 addr: fe80::5054:ff:feff:885f/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:820483 errors:0 dropped:3437 overruns:0 frame:0
+          TX packets:20 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+
+tmsh show security dos | sed '/TCP SYN flood/, /High/!d'
+-----------------------------------
+Security::DoS Config: TCP SYN flood
+-----------------------------------
+
+Statistics Type              Count
+  Attack Detected                0
+  Attack Count                   0
+  Stats 1h Samples               0
+  Stats                    5444133
+  Stats Rate                     0
+  Stats 1m                       0
+  Stats 1h                       0
+  Drops                          0
+  Drops Rate                     0
+  Drops 1m                       0
+  Drops 1h                       0
+  Int Drops                      0
+  Int Drops Rate                 0
+  Int Drops 1m                   0
+  Int Drops 1h                   0
+  Bad Actor Stats                0
+  Bad Actor Stats Rate           0
+  Bad Actor Drops                0
+  Bad Actor Drops Rate           0
+  WhiteList Hits                 0
+  AutoDetection              45000
+  Mitigation Low        4294967295
+  Mitigation High       4294967295
+
+  
+  nova boot --image cirros --flavor m1.tiny --security-groups default --nic net-id=daae0d9e-6fff-423f-ac59-46605f8ad40a Cirros
+
+nova boot <vm_name> --flavor <flavor_name> --image <image_name> --security-groups <security_group_name> --nic net-id=<network_ID> --ephemeral size=<size_GBs>
+
+glance image-create --name "CIRROS" --visibility public --disk-format raw --container-format bare --file cirros-0.3.0-i386-disk.img --progress
+ 
+nova boot --image CIRROS --flavor m1.tiny --security-groups default --nic net-id=daae0d9e-6fff-423f-ac59-46605f8ad40a Cirros
