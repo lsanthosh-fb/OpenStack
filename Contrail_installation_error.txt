@@ -1,0 +1,155 @@
+[admin@contrail_contr_lab2a ~]$ cd contrail-installer-master
+[admin@contrail_contr_lab2a contrail-installer-master]$
+[admin@contrail_contr_lab2a contrail-installer-master]$
+[admin@contrail_contr_lab2a contrail-installer-master]$
+[admin@contrail_contr_lab2a contrail-installer-master]$ ./contrail.sh build
+contrail.sh log /home/admin/contrail-installer-master/log/contrail.log.2017-07-10-171255
+2017-07-10 17:12:55 ++ echo_summary 'contrail.sh log /home/admin/contrail-installer-master/log/contrail.log.2017-07-10-171255'
+2017-07-10 17:12:55 ++ echo -e contrail.sh log /home/admin/contrail-installer-master/log/contrail.log.2017-07-10-171255
+2017-07-10 17:12:55 ++ ln -sf /home/admin/contrail-installer-master/log/contrail.log.2017-07-10-171255 /home/admin/contrail-installer-master/log/contrail.log
+2017-07-10 17:12:55 ++ ln -sf /home/admin/contrail-installer-master/log/contrail.log.2017-07-10-171255.2017-07-10-171255.summary /home/admin/contrail-installer-master/log/contrail.log.summary
+2017-07-10 17:12:55 ++ trap clean EXIT
+2017-07-10 17:12:55 ++ trap interrupt SIGINT
+2017-07-10 17:12:55 +++ read_stage
+2017-07-10 17:12:55 +++ [[ -f /home/admin/contrail-installer-master/.stage.txt ]]
+2017-07-10 17:12:55 +++ echo nofile
+2017-07-10 17:12:55 +++ return
+2017-07-10 17:12:55 ++ [[ nofile == \n\o\f\i\l\e ]]
+2017-07-10 17:12:55 ++ write_stage started
+2017-07-10 17:12:55 ++ echo started
+2017-07-10 17:12:55 ++ OPTION=build
+2017-07-10 17:12:55 ++ ARGS_COUNT=1
+2017-07-10 17:12:55 ++ setup_root_access
+2017-07-10 17:12:55 ++ is_package_installed sudo
+2017-07-10 17:12:55 ++ [[ -z sudo ]]
+2017-07-10 17:12:55 ++ [[ -z rpm ]]
+2017-07-10 17:12:55 ++ [[ rpm = \d\e\b ]]
+2017-07-10 17:12:55 ++ [[ rpm = \r\p\m ]]
+2017-07-10 17:12:55 ++ rpm --quiet -q sudo
+2017-07-10 17:12:55 ++ sudo grep -q '^#includedir.*/etc/sudoers.d' /etc/sudoers
+[sudo] password for admin:
+2017-07-10 17:13:36 Sorry, try again.
+[sudo] password for admin:
+2017-07-10 17:13:40 +++ mktemp
+2017-07-10 17:13:40 ++ TEMPFILE=/tmp/tmp.vA6OF7YKNG
+2017-07-10 17:13:40 ++ echo 'admin ALL=(root) NOPASSWD:ALL'
+2017-07-10 17:13:40 ++ echo 'Defaults:admin secure_path=/sbin:/usr/sbin:/usr/bin:/bin:/usr/local/sbin:/usr/local/bin'
+2017-07-10 17:13:40 ++ chmod 0440 /tmp/tmp.vA6OF7YKNG
+2017-07-10 17:13:40 ++ sudo chown root:root /tmp/tmp.vA6OF7YKNG
+2017-07-10 17:13:40 ++ sudo mv /tmp/tmp.vA6OF7YKNG /etc/sudoers.d/50_contrail_sh
+2017-07-10 17:13:40 +++ hostname
+2017-07-10 17:13:40 ++ grep -q contrail_contr_lab2a /etc/hosts
+2017-07-10 17:13:40 +++ whoami
+2017-07-10 17:13:40 ++ grep -q admin /etc/hosts
+2017-07-10 17:13:40 ++ sudo tee -a /etc/hosts
+2017-07-10 17:13:40 +++ whoami
+2017-07-10 17:13:40 127.0.0.1 admin
+2017-07-10 17:13:40 ++ echo '127.0.0.1 admin'
+[admin@contrail_contr_lab2a contrail-installer-master]$ 2017-07-10 17:13:40 ++ generate_env
+2017-07-10 17:13:40 exited with status :1
+2017-07-10 17:13:40 +++ echo named,dns,redis,cass,zk,ifmap,disco,apiSrv,schema,svc-mon,control,collector,analytics-api,query-engine,agent,redis-w,kafka,alarm
+2017-07-10 17:13:40 +++ tr -cd ,
+2017-07-10 17:13:40 +++ wc -c
+2017-07-10 17:13:40 ++ local srvcnt=17
+2017-07-10 17:13:40 ++ srvcnt=18
+2017-07-10 17:13:40 ++ echo NUM_ENABLED_SERVICES=18
+2017-07-10 17:13:40 ++ is_fedora
+2017-07-10 17:13:40 ++ [[ -z Red Hat ]]
+2017-07-10 17:13:40 ++ '[' 'Red Hat' = Fedora ']'
+2017-07-10 17:13:40 ++ '[' 'Red Hat' = 'Red Hat' ']'
+2017-07-10 17:13:40 ++ [[ True != \F\a\l\s\e ]]
+2017-07-10 17:13:40 ++ echo_msg 'only source installation of contrail in fedora is supported  exiting...'
+2017-07-10 17:13:40 ++ echo -e only source installation of contrail in fedora is supported exiting...
+2017-07-10 17:13:40 only source installation of contrail in fedora is supported exiting...
+2017-07-10 17:13:40 ++ exit 1
+2017-07-10 17:13:40 ++ clean
+2017-07-10 17:13:40 ++ local r=1
+2017-07-10 17:13:40 ++ echo 'exited with status :1'
+2017-07-10 17:13:40 ++ exit 1
+
+
+=================================================
+2017-07-10 18:39:59 ++ cd /opt/stack/contrail
+2017-07-10 18:39:59 ++ [[ False != \T\r\u\e ]]
+2017-07-10 18:39:59 +++ read_stage
+2017-07-10 18:39:59 +++ [[ -f /home/admin/contrail-installer-master/.stage.txt ]]
+2017-07-10 18:39:59 +++ read line
+2017-07-10 18:39:59 +++ echo python-dependencies
+2017-07-10 18:39:59 +++ return
+2017-07-10 18:39:59 ++ [[ python-dependencies == \p\y\t\h\o\n\-\d\e\p\e\n\d\e\n\c\i\e\s ]]
+2017-07-10 18:39:59 ++ repo_initialize
+2017-07-10 18:39:59 ++ echo 'Initializing repo'
+2017-07-10 18:39:59 ++ '[' '!' -d /opt/stack/contrail/.repo ']'
+2017-07-10 18:39:59 ++ git config --global --get user.name
+2017-07-10 18:39:59 ++ git config --global user.name Anonymous
+2017-07-10 18:39:59 ++ git config --global --get user.email
+2017-07-10 18:39:59 ++ git config --global user.email anonymous@nowhere.com
+2017-07-10 18:39:59 ++ '[' ssh == ssh ']'
+2017-07-10 18:39:59 ++ '[' master ']'
+2017-07-10 18:39:59 ++ repo init -u git@github.com:juniper/contrail-vnc -b master
+2017-07-10 18:40:00 gpg: keyring `/home/admin/.repoconfig/gnupg/secring.gpg' created
+2017-07-10 18:40:00 gpg: keyring `/home/admin/.repoconfig/gnupg/pubring.gpg' created
+2017-07-10 18:40:00 gpg: /home/admin/.repoconfig/gnupg/trustdb.gpg: trustdb created
+2017-07-10 18:40:00 gpg: key 920F5C65: public key "Repo Maintainer <repo@android.kernel.org>" imported
+2017-07-10 18:40:00 gpg: key 692B382C: public key "Conley Owens <cco3@android.com>" imported
+2017-07-10 18:40:00 gpg: Total number processed: 2
+2017-07-10 18:40:00 gpg:               imported: 2  (RSA: 1)
+2017-07-10 18:40:00 Get https://gerrit.googlesource.com/git-repo/clone.bundle
+2017-07-10 18:40:01 Get https://gerrit.googlesource.com/git-repo
+2017-07-10 18:40:02 From https://gerrit.googlesource.com/git-repo
+2017-07-10 18:40:02    35d2221..b54343d  master     -> origin/master
+2017-07-10 18:40:02 Get git@github.com:juniper/contrail-vnc
+The authenticity of host 'github.com (192.30.255.113)' can't be established.
+RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+Are you sure you want to continue connecting (yes/no)? The authenticity of host 'github.com (192.30.255.112)' can't be established.
+RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+Are you sure you want to continue connecting (yes/no)? yes
+2017-07-10 18:40:12 Warning: Permanently added 'github.com,192.30.255.113' (RSA) to the list of known hosts.
+2017-07-10 18:40:12 Permission denied (publickey).
+
+2017-07-10 18:42:03 Host key verification failed.
+2017-07-10 18:42:03 fatal: Could not read from remote repository.
+2017-07-10 18:42:03
+2017-07-10 18:42:03 Please make sure you have the correct access rights
+2017-07-10 18:42:03 and the repository exists.
+
+2017-07-10 18:42:35 Permission denied (publickey).
+2017-07-10 18:42:35 fatal: Could not read from remote repository.
+2017-07-10 18:42:35
+2017-07-10 18:42:35 Please make sure you have the correct access rights
+2017-07-10 18:42:35 and the repository exists.
+2017-07-10 18:43:20 fatal: cannot obtain manifest git@github.com:juniper/contrail-vnc
+2017-07-10 18:43:20 ++ rev_original='refs\/heads\/master'
+2017-07-10 18:43:20 ++ rev_new='refs\/heads\/master'
+2017-07-10 18:43:20 ++ sed -i 's/refs\/heads\/master/refs\/heads\/master/' .repo/manifest.xml
+2017-07-10 18:43:20 sed: can't read .repo/manifest.xml: No such file or directory
+2017-07-10 18:43:20 ++ change_stage python-dependencies repo-init
+2017-07-10 18:43:20 +++ read_stage
+2017-07-10 18:43:20 +++ [[ -f /home/admin/contrail-installer-master/.stage.txt ]]
+2017-07-10 18:43:20 +++ read line
+2017-07-10 18:43:20 +++ echo python-dependencies
+2017-07-10 18:43:20 +++ return
+2017-07-10 18:43:20 ++ current_stage=python-dependencies
+2017-07-10 18:43:20 ++ [[ python-dependencies == python-dependencies ]]
+2017-07-10 18:43:20 ++ write_stage repo-init
+2017-07-10 18:43:20 ++ echo repo-init
+2017-07-10 18:43:20 +++ read_stage
+2017-07-10 18:43:20 +++ [[ -f /home/admin/contrail-installer-master/.stage.txt ]]
+2017-07-10 18:43:20 +++ read line
+2017-07-10 18:43:20 +++ echo repo-init
+2017-07-10 18:43:20 +++ return
+2017-07-10 18:43:20 ++ [[ repo-init == \r\e\p\o\-\i\n\i\t ]]
+2017-07-10 18:43:20 ++ repo sync
+2017-07-10 18:43:20 error: in `sync`: [Errno 2] No such file or directory: '/opt/stack/contrail/.repo/manifests/.git/HEAD'
+2017-07-10 18:43:20 error: manifest missing or unreadable -- please run init
+[admin@contrail_contr_lab2a contrail-installer-master]$
+[admin@contrail_contr_lab2a contrail-installer-master]$ 2017-07-10 18:43:20 ++ ret_val=1
+2017-07-10 18:43:20 repo sync failed
+2017-07-10 18:43:20 ++ [[ 1 -ne 0 ]]
+2017-07-10 18:43:20 exited with status :1
+2017-07-10 18:43:20 ++ echo 'repo sync failed'
+2017-07-10 18:43:20 ++ exit 1
+2017-07-10 18:43:20 ++ clean
+2017-07-10 18:43:20 ++ local r=1
+2017-07-10 18:43:20 ++ echo 'exited with status :1'
+2017-07-10 18:43:20 ++ exit 1
