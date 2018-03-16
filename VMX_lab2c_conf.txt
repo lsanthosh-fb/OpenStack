@@ -1,0 +1,240 @@
+root@lab2c_vmx1# show | display set
+set version 17.2R1.13
+set system host-name lab2c_vmx1
+set system root-authentication encrypted-password "$6$Gc4XufjR$xvcLn7/j4NdIfm8OqD4MzeJ.cPpCSSMPtlyh198GtvYtx3eEFP5reyJlTiuhRIupSxWv3qpk8ZSGJYv2qAdd/0"
+set system services ssh root-login allow
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system processes dhcp-service traceoptions file dhcp_logfile
+set system processes dhcp-service traceoptions file size 10m
+set system processes dhcp-service traceoptions level all
+set system processes dhcp-service traceoptions flag all
+deactivate system processes dhcp-service
+set chassis fpc 0 pic 0 tunnel-services
+set chassis network-services ethernet
+set chassis auto-image-upgrade
+set interfaces ge-0/0/0 unit 0 family inet address 192.168.188.51/24
+set interfaces ge-0/0/1 unit 0 family inet address 172.16.100.51/24
+set interfaces fxp0 unit 0 family inet dhcp vendor-id Juniper-vmx
+deactivate interfaces fxp0 unit 0 family inet dhcp
+set interfaces fxp0 unit 0 family inet address 172.16.100.50/24
+set interfaces lo0 unit 100 family inet address 10.0.0.1/32
+set routing-options static route 0.0.0.0/0 next-hop 172.16.100.254
+set routing-options rib-groups RT-to-Global import-rib RT_Contrail.inet.0
+set routing-options rib-groups RT-to-Global import-rib inet.0
+set routing-options router-id 192.168.188.51
+set routing-options autonomous-system 64512
+set routing-options dynamic-tunnels contrail source-address 192.168.188.51
+set routing-options dynamic-tunnels contrail gre
+set routing-options dynamic-tunnels contrail destination-networks 192.168.188.0/24
+set protocols bgp group Internal_lab2c_contrail type internal
+set protocols bgp group Internal_lab2c_contrail local-address 192.168.188.51
+set protocols bgp group Internal_lab2c_contrail family inet-vpn unicast
+set protocols bgp group Internal_lab2c_contrail family route-target
+set protocols bgp group Internal_lab2c_contrail export default_route
+set protocols bgp group Internal_lab2c_contrail neighbor 192.168.188.64
+set policy-options prefix-list test 10.0.0.1/32
+set policy-options policy-statement default_route from protocol static
+set policy-options policy-statement export term pool from prefix-list test
+set policy-options policy-statement export term pool then accept
+set policy-options policy-statement export-lab2c term 1 from protocol bgp
+set policy-options policy-statement export-lab2c term 1 from protocol direct
+set policy-options policy-statement export-lab2c term 1 from protocol static
+set policy-options policy-statement export-lab2c term 1 then community add lab2c
+set policy-options policy-statement export-lab2c term 1 then accept
+set policy-options policy-statement export-lab2c term 3 then reject
+set policy-options policy-statement import-lab2c term 1 from protocol bgp
+set policy-options policy-statement import-lab2c term 1 from protocol direct
+set policy-options policy-statement import-lab2c term 1 from protocol static
+set policy-options policy-statement import-lab2c term 1 from community lab2c
+set policy-options policy-statement import-lab2c term 1 then accept
+set policy-options policy-statement import-lab2c term 3 then reject
+set policy-options community lab2c members target:64512:1
+set routing-instances RT_Contrail instance-type vrf
+set routing-instances RT_Contrail interface lo0.100
+set routing-instances RT_Contrail route-distinguisher 64512:1
+set routing-instances RT_Contrail vrf-target target:64512:1
+set routing-instances RT_Contrail vrf-table-label
+set routing-instances RT_Contrail routing-options interface-routes rib-group inet RT-to-Global
+deactivate routing-instances RT_Contrail routing-options interface-routes
+set routing-instances RT_Contrail routing-options static route 0.0.0.0/0 next-table inet.0
+
+[edit]
+root@lab2c_vmx1#
+
+
+root@lab2c_vmx1# show
+## Last changed: 2017-08-03 05:30:40 UTC
+version 17.2R1.13;
+system {
+    host-name lab2c_vmx1;
+    root-authentication {
+        encrypted-password "$6$Gc4XufjR$xvcLn7/j4NdIfm8OqD4MzeJ.cPpCSSMPtlyh198GtvYtx3eEFP5reyJlTiuhRIupSxWv3qpk8ZSGJYv2qAdd/0"; ## SECRET-DATA
+    }
+    services {
+        ssh {
+            root-login allow;
+        }
+    }
+    syslog {
+        user * {
+            any emergency;
+        }
+        file messages {
+            any notice;
+            authorization info;
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+    }
+    processes {
+        inactive: dhcp-service {
+            traceoptions {
+                file dhcp_logfile size 10m;
+                level all;
+                flag all;
+            }
+        }
+    }
+}
+chassis {
+    fpc 0 {
+        pic 0 {
+            tunnel-services;
+        }
+    }
+    network-services ethernet;
+    auto-image-upgrade;
+}
+interfaces {
+    ge-0/0/0 {
+        unit 0 {
+            family inet {
+                address 192.168.188.51/24;
+            }
+        }
+    }
+    ge-0/0/1 {
+        unit 0 {
+            family inet {
+                address 172.16.100.51/24;
+            }
+        }
+    }
+    fxp0 {
+        unit 0 {
+            family inet {
+                inactive: dhcp {
+                    vendor-id Juniper-vmx;
+                }
+                address 172.16.100.50/24;
+            }
+        }
+    }
+    lo0 {
+        unit 100 {
+            family inet {
+                address 10.0.0.1/32;
+            }
+        }
+    }
+}
+routing-options {
+    static {
+        route 0.0.0.0/0 next-hop 172.16.100.254;
+    }
+    rib-groups {
+        RT-to-Global {
+            import-rib [ RT_Contrail.inet.0 inet.0 ];
+        }
+    }
+    router-id 192.168.188.51;
+    autonomous-system 64512;
+    dynamic-tunnels {
+        contrail {
+            source-address 192.168.188.51;
+            gre;
+            destination-networks {
+                192.168.188.0/24;
+            }
+        }
+    }
+}
+protocols {
+    bgp {
+        group Internal_lab2c_contrail {
+            type internal;
+            local-address 192.168.188.51;
+            family inet-vpn {
+                unicast;
+            }
+            family route-target;
+            export default_route;
+            neighbor 192.168.188.64;
+        }
+    }
+}
+policy-options {
+    prefix-list test {
+        10.0.0.1/32;
+    }
+    policy-statement default_route {
+        from protocol static;
+    }
+    policy-statement export {
+        term pool {
+            from {
+                prefix-list test;
+            }
+            then accept;
+        }
+    }
+    policy-statement export-lab2c {
+        term 1 {
+            from protocol [ bgp direct static ];
+            then {
+                community add lab2c;
+                accept;
+            }
+        }
+        term 3 {
+            then reject;
+        }
+    }
+    policy-statement import-lab2c {
+        term 1 {
+            from {
+                protocol [ bgp direct static ];
+                community lab2c;
+            }
+            then accept;
+        }
+        term 3 {
+            then reject;
+        }
+    }
+    community lab2c members target:64512:1;
+}
+routing-instances {
+    RT_Contrail {
+        instance-type vrf;
+        interface lo0.100;
+        route-distinguisher 64512:1;
+        vrf-target target:64512:1;
+        vrf-table-label;
+        routing-options {
+            inactive: interface-routes {
+                rib-group inet RT-to-Global;
+            }
+            static {
+                route 0.0.0.0/0 next-table inet.0;
+            }
+        }
+    }
+}
+
+[edit]
+root@lab2c_vmx1#
