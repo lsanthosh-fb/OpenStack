@@ -1,0 +1,792 @@
+[techm@director ~]$ neutron router-show vRouter
++-------------------------+----------------------------------------------------------------+
+| Field                   | Value                                                          |
++-------------------------+----------------------------------------------------------------+
+| admin_state_up          | True                                                           |
+| availability_zone_hints |                                                                |
+| availability_zones      | nova                                                           |
+| created_at              | 2017-03-19T10:18:10Z                                           |
+| description             |                                                                |
+| distributed             | False                                                          |
+| external_gateway_info   |                                                                |
+| flavor_id               |                                                                |
+| ha                      | False                                                          |
+| id                      | 7bbfd9b6-7cb1-4af2-8c93-7a8f525526d8                           |
+| name                    | vRouter                                                        |
+| project_id              | 4340928735c04db7b660243c3d5bc02a                               |
+| revision_number         | 33                                                             |
+| routes                  | {"destination": "0.0.0.0/0", "nexthop": "172.16.14.12"}        |
+|                         | {"destination": "10.0.0.0/16", "nexthop": "172.16.14.105"}     |
+|                         | {"destination": "172.16.51.10/32", "nexthop": "172.16.11.107"} |
+|                         | {"destination": "172.16.51.5/32", "nexthop": "172.16.11.107"}  |
+|                         | {"destination": "172.16.51.6/32", "nexthop": "172.16.11.107"}  |
+|                         | {"destination": "172.16.51.7/32", "nexthop": "172.16.11.107"}  |
+|                         | {"destination": "172.16.51.9/32", "nexthop": "172.16.11.107"}  |
+|                         | {"destination": "172.16.52.5/32", "nexthop": "172.16.15.105"}  |
+|                         | {"destination": "172.16.52.50/32", "nexthop": "172.16.15.205"} |
+|                         | {"destination": "172.16.53.5/32", "nexthop": "172.16.11.101"}  |
+|                         | {"destination": "172.16.53.6/32", "nexthop": "172.16.11.101"}  |
+|                         | {"destination": "172.16.53.7/32", "nexthop": "172.16.11.101"}  |
+| status                  | ACTIVE                                                         |
+| tenant_id               | 4340928735c04db7b660243c3d5bc02a                               |
+| updated_at              | 2017-04-02T01:58:38Z                                           |
++-------------------------+----------------------------------------------------------------+
+
+ neutron router-update --route destination="0.0.0.0/0",nexthop="172.16.14.12" destination="10.0.0.0/16",nexthop="172.16.14.105" list=TRUE vRouter
+ 
+ 
+[techm@director Image]$ openstack catalog list | more
++------------+----------------+-----------------------------------------------------------------------------+
+| Name       | Type           | Endpoints                                                                   |
++------------+----------------+-----------------------------------------------------------------------------+
+| gnocchi    | metric         | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:8041                                          |
+|            |                | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:8041                                            |
+|            |                | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:8041                                             |
+|            |                |                                                                             |
+| swift      | object-store   | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:8080                                             |
+|            |                | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:8080/v1/AUTH_4340928735c04db7b660243c3d5bc02a   |
+|            |                | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:8080/v1/AUTH_4340928735c04db7b660243c3d5bc02a |
+|            |                |                                                                             |
+| cinderv2   | volumev2       | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:8776/v2/4340928735c04db7b660243c3d5bc02a         |
+|            |                | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:8776/v2/4340928735c04db7b660243c3d5bc02a        |
+|            |                | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:8776/v2/4340928735c04db7b660243c3d5bc02a      |
+|            |                |                                                                             |
+| aodh       | alarming       | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:8042                                            |
+|            |                | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:8042                                          |
+|            |                | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:8042                                             |
+|            |                |                                                                             |
+| cinder     | volume         | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:8776/v1/4340928735c04db7b660243c3d5bc02a      |
+|            |                | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:8776/v1/4340928735c04db7b660243c3d5bc02a        |
+|            |                | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:8776/v1/4340928735c04db7b660243c3d5bc02a         |
+|            |                |                                                                             |
+| heat       | orchestration  | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:8004/v1/4340928735c04db7b660243c3d5bc02a         |
+|            |                | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:8004/v1/4340928735c04db7b660243c3d5bc02a      |
+|            |                | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:8004/v1/4340928735c04db7b660243c3d5bc02a        |
+| nova       | compute        | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:8774/v2.1                                        |
+|            |                | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:8774/v2.1                                       |
+|            |                | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:8774/v2.1                                     |
+|            |                |                                                                             |
+| keystone   | identity       | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:5000/v2.0                                       |
+|            |                | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:5000/v2.0                                     |
+|            |                | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:35357/v2.0                                       |
+|            |                |                                                                             |
+| ceilometer | metering       | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:8777                                            |
+|            |                | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:8777                                             |
+|            |                | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:8777                                          |
+| glance     | image          | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:9292                                          |
+|            |                | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:9292                                            |
+|            |                | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:9292                                             |
+|            |                |                                                                             |
+| heat-cfn   | cloudformation | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:8000/v1                                          |
+|            |                | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:8000/v1                                       |
+|            |                | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:8000/v1                                         |
+|            |                |                                                                             |
+| neutron    | network        | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:9696                                             |
+|            |                | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:9696                                          |
+|            |                | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:9696                                            |
+|            |                |                                                                             |
+| cinderv3   | volumev3       | regionOne                                                                   |
+|            |                |   admin: http://192.0.8.12:8776/v3/4340928735c04db7b660243c3d5bc02a         |
+|            |                | regionOne                                                                   |
+|            |                |   internal: http://192.0.8.12:8776/v3/4340928735c04db7b660243c3d5bc02a      |
+|            |                | regionOne                                                                   |
+|            |                |   public: http://192.0.8.12:8776/v3/4340928735c04db7b660243c3d5bc02a        |
+|            |                |                                                                             |
++------------+----------------+-----------------------------------------------------------------------------+
+
+ 
+ 
+[techm@director ~]$ neutron port-list
++------------------------------------+------------------------------------+-------------------+--------------------------------------+
+| id                                 | name                               | mac_address       | fixed_ips                            |
++------------------------------------+------------------------------------+-------------------+--------------------------------------+
+| 03b9e09f-                          |                                    | fa:16:3e:86:c4:e4 | {"subnet_id": "98c66416-e05d-        |
+| cd06-4c34-b2e0-b187e2eae575        |                                    |                   | 45ce-8561-e0c99fa2aa72",             |
+|                                    |                                    |                   | "ip_address": "172.16.32.12"}        |
+| 057fd66f-                          | CSM-5-VTH-1-3                      | fa:16:3e:40:0c:38 | {"subnet_id": "4d5d4e6c-e10a-45d0    |
+| 7d76-4a00-aac3-2b4e5ed257d9        |                                    |                   | -8ccb-48b2db3cf196", "ip_address":   |
+|                                    |                                    |                   | "169.254.50.1"}                      |
+| 06e334d2-3995-4201-bee6-c297bf55a3 | VYOS_Gi                            | fa:16:3e:36:24:f9 | {"subnet_id": "2d9fe1f2-0ada-4910-91 |
+| b7                                 |                                    |                   | d7-e71b02351558", "ip_address":      |
+|                                    |                                    |                   | "172.16.14.12"}                      |
+| 0b0d1d08-edba-4c5a-99ac-           |                                    | fa:16:3e:15:14:b4 | {"subnet_id": "be1db483-f38e-410b-   |
+| 5b55f6fa5391                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.216"}                     |
+| 0c81767d-8915-4451-bc5b-           | CSM-1-VTH-1-2                      | fa:16:3e:7b:c2:e1 | {"subnet_id": "9f1ecca3-7e69-4dfb-   |
+| 2dc7903875bd                       |                                    |                   | a32a-8c4057fcd6c5", "ip_address":    |
+|                                    |                                    |                   | "172.16.17.106"}                     |
+| 0dde48ae-                          | ePDG-CSM-1-VTH-1-2                 | fa:16:3e:67:cc:c2 | {"subnet_id": "56614aa5-32c8-4d96-90 |
+| 7c47-4ffa-8027-571296891ff1        |                                    |                   | f2-9fcc1c515141", "ip_address":      |
+|                                    |                                    |                   | "172.16.37.106"}                     |
+| 0f5c3752-7608-411b-bcba-           |                                    | fa:16:3e:09:49:ee | {"subnet_id": "a13ba487-778b-4a76    |
+| eb473699d253                       |                                    |                   | -8cfe-7e3a9412b06f", "ip_address":   |
+|                                    |                                    |                   | "172.16.90.5"}                       |
+| 0fe3bf78-81a6-47bc-                |                                    | fa:16:3e:30:21:2e | {"subnet_id": "aeb65f62-18f0-486e-93 |
+| 9c23-a13cfd34eab5                  |                                    |                   | 93-33f7112e9d94", "ip_address":      |
+|                                    |                                    |                   | "172.16.16.7"}                       |
+| 113ba4b1-ddf1-4116-b482-7e6eea9625 |                                    | fa:16:3e:12:2c:1c | {"subnet_id": "be1db483-f38e-410b-   |
+| c3                                 |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.215"}                     |
+| 13964a04-2285-4ed1-bef9-2f215b5e8d | ePDG-SSM-5-OAM-IP                  | fa:16:3e:40:3a:f4 | {"subnet_id": "be1db483-f38e-410b-   |
+| b7                                 |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.152"}                     |
+| 1765175b-dfe2-4758-9c3a-           |                                    | fa:16:3e:65:fd:f8 | {"subnet_id": "be1db483-f38e-410b-   |
+| 08da766461a5                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.210"}                     |
+| 177341f0-c170-4782-ba0f-           |                                    | fa:16:3e:5a:5d:60 | {"subnet_id": "b55d7a4b-3f05-434e-   |
+| 5a78b112c875                       |                                    |                   | 998e-a0a91c19b587", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.2"}                       |
+| 1806f238-10e4-4a8f-                | CSM-1-OAM-IP                       | fa:16:3e:d8:fc:0b | {"subnet_id": "be1db483-f38e-410b-   |
+| 85b3-f6ac67901f32                  |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.123"}                     |
+| 19a8014f-91a4-484b-                | IMS_HSS_Provider2                  | fa:16:3e:10:45:57 | {"subnet_id": "5af071b9-454d-42cc-   |
+| 8c84-0304ffa059df                  |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.110"}                    |
+| 1a850fe1-7027-4fd0-9613-54f9a0f767 | ePDG-PHY-SSM-5-OAM-IP              | fa:16:3e:02:a3:9c | {"subnet_id": "be1db483-f38e-410b-   |
+| 65                                 |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.162"}                     |
+| 1b4a7df3-61f3-4be4-a926-3837e90405 | vEDGE-BBU                          | fa:16:3e:b3:d4:d3 | {"subnet_id": "ce3ae364-50bb-4495    |
+| 61                                 |                                    |                   | -bb6e-9502ae1484f0", "ip_address":   |
+|                                    |                                    |                   | "172.16.11.130"}                     |
+| 1d74bb8e-                          | IMS_HSS_OAM                        | fa:16:3e:5e:e6:1b | {"subnet_id": "be1db483-f38e-410b-   |
+| 5d89-4149-8db9-1490d5c2b3c7        |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.3"}                       |
+| 1e19a796-99e6-411f-ab0d-           |                                    | fa:16:3e:50:95:2d | {"subnet_id": "4a29a7d4-90c8-4bad-   |
+| 53a6c4c8a151                       |                                    |                   | 9bec-a3da00d4da2b", "ip_address":    |
+|                                    |                                    |                   | "172.16.31.7"}                       |
+| 1e4dde86-66f5-4e84-bb20-d0adfecb06 | ePDG-PHY-SSM-5-VTH-5-3             | fa:16:3e:a7:fb:7e | {"subnet_id": "2cc907cd-118b-4dbc-   |
+| 6b                                 |                                    |                   | 8bdd-c0d31da6dad7", "ip_address":    |
+|                                    |                                    |                   | "172.16.15.205"}                     |
+| 1ec54197-eb44-47e8-a876-df549c2d74 | vCDN-PUBLIC                        | fa:16:3e:4f:4c:51 | {"subnet_id": "f4702f21-ba27-4601-8b |
+| 2a                                 |                                    |                   | 91-023ecf217f51", "ip_address":      |
+|                                    |                                    |                   | ""}                    |
+| 217bb192-b641-4e23-b193-5cddbf4c95 |                                    | fa:16:3e:6d:15:af | {"subnet_id": "be1db483-f38e-410b-   |
+| 60                                 |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.213"}                     |
+| 21c331cb-55b6-4666-b59a-           |                                    | fa:16:3e:b4:21:b9 | {"subnet_id": "5af071b9-454d-42cc-   |
+| 609a4257edc5                       |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.117"}                    |
+| 2218217a-34b9-41d6-bc1b-           |                                    | fa:16:3e:73:dc:a1 | {"subnet_id": "ce3ae364-50bb-4495    |
+| 82ba6a561d3a                       |                                    |                   | -bb6e-9502ae1484f0", "ip_address":   |
+|                                    |                                    |                   | "172.16.11.11"}                      |
+| 22f4895c-f42a-                     |                                    | fa:16:3e:a1:66:3e | {"subnet_id": "a053df43-3004-487c-   |
+| 4d39-8825-c5d8215412ea             |                                    |                   | ad05-d51b75860558", "ip_address":    |
+|                                    |                                    |                   | "172.16.80.9"}                       |
+| 2308aece-7ec6-46b2-b24e-           |                                    | fa:16:3e:d1:f4:54 | {"subnet_id": "b55d7a4b-3f05-434e-   |
+| c66876c7cc60                       |                                    |                   | 998e-a0a91c19b587", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.10"}                      |
+| 26668c36-8e0b-                     | BBU_METADATA                       | fa:16:3e:89:87:0d | {"subnet_id": "3fe8a0f2-c1e3-4d2c-   |
+| 4b4b-b332-60746a094222             |                                    |                   | 893b-9f619868831b", "ip_address":    |
+|                                    |                                    |                   | "172.16.28.7"}                       |
+| 27ffb04e-a4ce-4a61-977a-           | SSM-5-VTH-5-1                      | fa:16:3e:10:cc:29 | {"subnet_id": "ce3ae364-50bb-4495    |
+| 81db329a2ad3                       |                                    |                   | -bb6e-9502ae1484f0", "ip_address":   |
+|                                    |                                    |                   | "172.16.11.107"}                     |
+| 2877bd75-78aa-                     | vMME-LB-port1-mm5kukuczmh3         | fa:16:3e:ae:21:29 | {"subnet_id": "f6214153-4ec2-4601-8e |
+| 442c-a428-1ba163f55531             |                                    |                   | 24-63effa73f39d", "ip_address":      |
+|                                    |                                    |                   | "169.254.101.170"}                   |
+| 2c300efc-                          | vMME-RM-port1-6kkchsvi3ry4         | fa:16:3e:9f:0a:0f | {"subnet_id": "f6214153-4ec2-4601-8e |
+| ad39-4d34-85a3-55e2c6e7de8f        |                                    |                   | 24-63effa73f39d", "ip_address":      |
+|                                    |                                    |                   | "169.254.101.5"}                     |
+| 2da34a0b-                          | vMME-MGMT-port1-7za5gk4smywq       | fa:16:3e:06:20:ef | {"subnet_id": "f6214153-4ec2-4601-8e |
+| ec09-4681-ab34-598ef1c3404f        |                                    |                   | 24-63effa73f39d", "ip_address":      |
+|                                    |                                    |                   | "169.254.101.1"}                     |
+| 2e221b35-2db5-4c63-b517-94ad1cd794 |                                    | fa:16:3e:11:bc:aa | {"subnet_id": "be1db483-f38e-410b-   |
+| 4a                                 |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.208"}                     |
+| 2eb68968-f471-4fb1-9956-02e2405e5f |                                    | fa:16:3e:a3:ba:24 | {"subnet_id": "208cec1d-             |
+| 84                                 |                                    |                   | 0c59-4b69-9978-8e4bbb3a407a",        |
+|                                    |                                    |                   | "ip_address": "172.16.22.2"}         |
+| 2f2f4294-20b4-4ef2-9e4b-           | SSM-5-OAM-IP                       | fa:16:3e:57:1f:ec | {"subnet_id": "be1db483-f38e-410b-   |
+| 7f0876c66a0a                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.122"}                     |
+| 2fca4251-f72d-40af-                |                                    | fa:16:3e:fa:2a:41 | {"subnet_id": "2d9fe1f2-0ada-4910-91 |
+| a5d7-c2b6081a6ae1                  |                                    |                   | d7-e71b02351558", "ip_address":      |
+|                                    |                                    |                   | "172.16.14.1"}                       |
+| 32dd06df-                          | gCDN-PUBLIC                        | fa:16:3e:c1:b3:7a | {"subnet_id": "f4702f21-ba27-4601-8b |
+| 3aa5-4a34-9aa9-f851d5626af5        |                                    |                   | 91-023ecf217f51", "ip_address":      |
+|                                    |                                    |                   | "50.202.170.124"}                    |
+| 3479bba7-7453-435f-9247-eccb191c1a |                                    | fa:16:3e:b7:bc:b6 | {"subnet_id": "be1db483-f38e-410b-   |
+| 0f                                 |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.217"}                     |
+| 35d697ad-42ab-4933-a5af-           | Jumpbox-Provider-Public            | fa:16:3e:1f:0c:4a | {"subnet_id": "f4702f21-ba27-4601-8b |
+| b382c9fd08ec                       |                                    |                   | 91-023ecf217f51", "ip_address":      |
+|                                    |                                    |                   | ""}                    |
+| 366b81a0-60f6-4f88-9a47-34ee3b66d9 |                                    | fa:16:3e:41:1c:f5 | {"subnet_id": "c26fd07c-             |
+| f1                                 |                                    |                   | 2df9-46a7-bb69-c85208f57e64",        |
+|                                    |                                    |                   | "ip_address": "172.16.21.5"}         |
+| 367f3446-2369-404b-80fd-           |                                    | fa:16:3e:e4:ce:4c | {"subnet_id": "98c66416-e05d-        |
+| c344a1f31d9b                       |                                    |                   | 45ce-8561-e0c99fa2aa72",             |
+|                                    |                                    |                   | "ip_address": "172.16.32.4"}         |
+| 3892e3b0-5a81-4d67-aac8-745383f2ab |                                    | fa:16:3e:7e:2e:d0 | {"subnet_id": "1d480eda-5026-425a-   |
+| 5b                                 |                                    |                   | 8e25-de06e392944b", "ip_address":    |
+|                                    |                                    |                   | "172.16.47.2"}                       |
+| 3e056bfc-7261-458f-                |                                    | fa:16:3e:94:ba:7a | {"subnet_id": "a9ca3711-11b8-48a8-b0 |
+| 9bb9-3ad0d0ac278e                  |                                    |                   | 62-33d8b923bb27", "ip_address":      |
+|                                    |                                    |                   | "172.16.70.2"}                       |
+| 3f379322-5eaf-46fd-981a-           | SBC_Gi                             | fa:16:3e:ce:70:f2 | {"subnet_id": "2d9fe1f2-0ada-4910-91 |
+| 4ca8aa58ff6a                       |                                    |                   | d7-e71b02351558", "ip_address":      |
+|                                    |                                    |                   | "172.16.14.4"}                       |
+| 4541399c-26d1-4273-82ee-           |                                    | fa:16:3e:9f:7e:c8 | {"subnet_id": "be1db483-f38e-410b-   |
+| 0916f6328a32                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.203"}                     |
+| 45b3fd6e-a6c8-4a7e-                |                                    | fa:16:3e:38:26:d4 | {"subnet_id": "8ee1cbad-fba1-40dd-   |
+| bc22-51880646001c                  |                                    |                   | 8dd4-1f639a20df47", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.13"}                      |
+| 47e88369-bca1-4c33-a468-cb91b70753 |                                    | fa:16:3e:e6:ef:d1 | {"subnet_id": "4a29a7d4-90c8-4bad-   |
+| 47                                 |                                    |                   | 9bec-a3da00d4da2b", "ip_address":    |
+|                                    |                                    |                   | "172.16.31.9"}                       |
+| 48547c8b-                          |                                    | fa:16:3e:37:da:9b | {"subnet_id": "2cc907cd-118b-4dbc-   |
+| ded8-4098-a4e9-7b857d0083e0        |                                    |                   | 8bdd-c0d31da6dad7", "ip_address":    |
+|                                    |                                    |                   | "172.16.15.1"}                       |
+| 48ea3ae3-ad38-4ccd-a55e-           |                                    | fa:16:3e:10:cb:a8 | {"subnet_id": "98c66416-e05d-        |
+| c0b728314678                       |                                    |                   | 45ce-8561-e0c99fa2aa72",             |
+|                                    |                                    |                   | "ip_address": "172.16.32.19"}        |
+| 49c15121-3649-4198-9850-9d4d581eea |                                    | fa:16:3e:b5:aa:5b | {"subnet_id": "b564de85-7fee-        |
+| 46                                 |                                    |                   | 4ec2-86b2-bda34164f9f7",             |
+|                                    |                                    |                   | "ip_address": "172.16.27.11"}        |
+| 49e23bda-4c20-4538-9ece-           | vMME-MGMT-port2-36mu6ns3blqx       | fa:16:3e:ce:ff:89 | {"subnet_id": "70fd41d9-1a3c-4dd0    |
+| a787b6269d3e                       |                                    |                   | -a20c-d9bdb7d093e8", "ip_address":   |
+|                                    |                                    |                   | "169.254.200.1"}                     |
+| 4ac40da4-0d7f-                     | ePDG-MCM-7-OAM-IP                  | fa:16:3e:4c:ed:b8 | {"subnet_id": "be1db483-f38e-410b-   |
+| 4da3-9776-e65e0ffda847             |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.151"}                     |
+| 4b71abf6-6371-46a3-92b5-23c3cce003 |                                    | fa:16:3e:29:f9:a6 | {"subnet_id": "be1db483-f38e-410b-   |
+| 76                                 |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.209"}                     |
+| 4c2e4b63-b188-4c3a-953c-           |                                    | fa:16:3e:4a:4d:f9 | {"subnet_id": "be1db483-f38e-410b-   |
+| 2436d29d10c2                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.207"}                     |
+| 4cb80326-92c4-4b27-a2f4-5b988eb19b |                                    | fa:16:3e:21:3d:c0 | {"subnet_id": "be1db483-f38e-410b-   |
+| c9                                 |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.1"}                       |
+| 4f08e2b3-2708-41e3-a01f-           |                                    | fa:16:3e:00:eb:ef | {"subnet_id": "be1db483-f38e-410b-   |
+| ce84f37be387                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.13"}                      |
+| 54530d33-e905-4966-91b4-051fee5408 |                                    | fa:16:3e:71:35:53 | {"subnet_id": "b55d7a4b-3f05-434e-   |
+| ed                                 |                                    |                   | 998e-a0a91c19b587", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.6"}                       |
+| 559289d1-86b3-4212-9fa9-279738f5f2 | ePDG-PHY-SSM-SWu                   | fa:16:3e:11:87:0e | {"subnet_id": "5af071b9-454d-42cc-   |
+| a7                                 |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.126"}                    |
+| 57c59472-0d8d-4058-aae4-90f791b64a |                                    | fa:16:3e:0c:a1:09 | {"subnet_id": "a9ca3711-11b8-48a8-b0 |
+| 62                                 |                                    |                   | 62-33d8b923bb27", "ip_address":      |
+|                                    |                                    |                   | "172.16.70.13"}                      |
+| 5a3ac31f-25aa-                     |                                    | fa:16:3e:47:fa:04 | {"subnet_id": "be214b44-5cd3-4d71    |
+| 45ea-9313-11bd221d83c2             |                                    |                   | -bbea-42d01016c7b1", "ip_address":   |
+|                                    |                                    |                   | "172.16.25.11"}                      |
+| 5a740236-157e-4701-be7a-           |                                    | fa:16:3e:77:ed:42 | {"subnet_id": "5af071b9-454d-42cc-   |
+| 3fe8fa915976                       |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.111"}                    |
+| 5a8de3e9-1add-                     | ePDG-PHY-MCM-BASE                  | fa:16:3e:d2:29:33 | {"subnet_id": "2205a9f1-eaa8-4072-84 |
+| 4a99-a921-789082ded0cd             |                                    |                   | 63-474e7c7965cd", "ip_address":      |
+|                                    |                                    |                   | "169.254.50.71"}                     |
+| 5ab8c72f-051c-4700-b52b-           | vMME-SIG-port0-fjj3njd2p45z        | fa:16:3e:12:4b:d9 | {"subnet_id": "be1db483-f38e-410b-   |
+| a0d2a27dca44                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.134"}                     |
+| 5ce04860-6a6e-4cad-                |                                    | fa:16:3e:9e:cf:f9 | {"subnet_id": "8ee1cbad-fba1-40dd-   |
+| be28-a05d597f43ef                  |                                    |                   | 8dd4-1f639a20df47", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.12"}                      |
+| 5d9b12c8-835a-4288-bfda-           |                                    | fa:16:3e:cb:97:0e | {"subnet_id": "be214b44-5cd3-4d71    |
+| e2e5f515a80f                       |                                    |                   | -bbea-42d01016c7b1", "ip_address":   |
+|                                    |                                    |                   | "172.16.25.12"}                      |
+| 5e13b5d4-2fe5-4af0-a51b-           | ePDG-MCM-VIP                       | fa:16:3e:ec:03:44 | {"subnet_id": "be1db483-f38e-410b-   |
+| 6879c73a5827                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.144"}                     |
+| 60d8d2b1-239e-450a-                | ECAS_OAM                           | fa:16:3e:65:c0:84 | {"subnet_id": "be1db483-f38e-410b-   |
+| 92d1-8cfeb8f333cb                  |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.11"}                      |
+| 63381778-b144-4aed-                |                                    | fa:16:3e:4c:ad:a1 | {"subnet_id": "c42e9dd8-f5a4-47cc-a9 |
+| bb41-8fd6028c6c18                  |                                    |                   | 94-dc8ff0788863", "ip_address":      |
+|                                    |                                    |                   | "192.168.110.2"}                     |
+| 6347995f-899a-4103-8f5d-           | vEDGE-SAEGW                        | fa:16:3e:e3:02:cd | {"subnet_id": "ce3ae364-50bb-4495    |
+| 14531edc8479                       |                                    |                   | -bb6e-9502ae1484f0", "ip_address":   |
+|                                    |                                    |                   | "172.16.11.120"}                     |
+| 661100c9-e1f2-4709-bf89-e179adf24e |                                    | fa:16:3e:98:c8:bc | {"subnet_id": "aeb65f62-18f0-486e-93 |
+| 5e                                 |                                    |                   | 93-33f7112e9d94", "ip_address":      |
+|                                    |                                    |                   | "172.16.16.11"}                      |
+| 67b111d3-a7fa-4a7e-8cec-           | ePDG-CSM-1-OAM-IP                  | fa:16:3e:54:73:5a | {"subnet_id": "be1db483-f38e-410b-   |
+| c567d40484e7                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.153"}                     |
+| 689aa2ab-14a6-4623-bb7c-           | ePDG-SSM-5-VTH-5-3                 | fa:16:3e:c6:81:fd | {"subnet_id": "ce3ae364-50bb-4495    |
+| 76c7a1cda472                       |                                    |                   | -bb6e-9502ae1484f0", "ip_address":   |
+|                                    |                                    |                   | "172.16.11.207"}                     |
+| 6e57f756-f7e6-45aa-a1ed-           | ePDG-MCM-BASE                      | fa:16:3e:51:ea:1f | {"subnet_id": "edb2765a-fe3a-452b-   |
+| 66666ab31c82                       |                                    |                   | ba91-63db55d99604", "ip_address":    |
+|                                    |                                    |                   | "169.254.50.71"}                     |
+| 6f76ccef-2cff-                     |                                    | fa:16:3e:56:31:06 | {"subnet_id": "8ee1cbad-fba1-40dd-   |
+| 45f2-88a3-e7f5d727100e             |                                    |                   | 8dd4-1f639a20df47", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.15"}                      |
+| 70d4305e-                          | SSM-5-VTH-5-3                      | fa:16:3e:b5:74:04 | {"subnet_id": "2cc907cd-118b-4dbc-   |
+| a1e1-4335-9690-1000e07c7c65        |                                    |                   | 8bdd-c0d31da6dad7", "ip_address":    |
+|                                    |                                    |                   | "172.16.15.105"}                     |
+| 70f9b761-7c70-496a-80ef-           | SBC-Gi                             | fa:16:3e:32:99:32 | {"subnet_id": "2d9fe1f2-0ada-4910-91 |
+| 19afe4d808db                       |                                    |                   | d7-e71b02351558", "ip_address":      |
+|                                    |                                    |                   | "172.16.14.10"}                      |
+| 734ef2ac-0730-4699-9975-5201af02ca | COM-HSS-OAM                        | fa:16:3e:8c:d1:3a | {"subnet_id": "be1db483-f38e-410b-   |
+| fe                                 |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.224"}                     |
+| 7879b973-bd97-4190-a74f-           | vIMS-SBC-INT-1                     | fa:16:3e:29:b4:e3 | {"subnet_id": "f4702f21-ba27-4601-8b |
+| d33bd080bd45                       |                                    |                   | 91-023ecf217f51", "ip_address":      |
+|                                    |                                    |                   | ""}                    |
+| 7c5a3b54-a87b-4d65-80cf-           |                                    | fa:16:3e:b3:85:57 | {"subnet_id": "4a29a7d4-90c8-4bad-   |
+| a79d6e27113d                       |                                    |                   | 9bec-a3da00d4da2b", "ip_address":    |
+|                                    |                                    |                   | "172.16.31.15"}                      |
+| 7d100c40-ff91-40c9-8d1b-           |                                    | fa:16:3e:b2:d7:ee | {"subnet_id": "b55d7a4b-3f05-434e-   |
+| 29872e646831                       |                                    |                   | 998e-a0a91c19b587", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.5"}                       |
+| 7d996d25-70eb-4dd1-8f2f-           |                                    | fa:16:3e:97:76:8a | {"subnet_id": "5af071b9-454d-42cc-   |
+| 784ceaa28644                       |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.103"}                    |
+| 7e0dec92-e93f-4105-b479-d092b030fd |                                    | fa:16:3e:18:0e:4d | {"subnet_id": "4a29a7d4-90c8-4bad-   |
+| 4e                                 |                                    |                   | 9bec-a3da00d4da2b", "ip_address":    |
+|                                    |                                    |                   | "172.16.31.2"}                       |
+| 7fb02e4d-                          |                                    | fa:16:3e:7b:e8:25 | {"subnet_id": "ce3ae364-50bb-4495    |
+| f78c-4169-be97-2b40f16f70f2        |                                    |                   | -bb6e-9502ae1484f0", "ip_address":   |
+|                                    |                                    |                   | "172.16.11.1"}                       |
+| 819dcf8b-298b-4e2e-be1c-           |                                    | fa:16:3e:9f:59:cb | {"subnet_id": "be1db483-f38e-410b-   |
+| 1aad1b28794d                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.15"}                      |
+| 82471752-82c0-4996-91b1-33bdc6b184 | vMME-LB-                           | fa:16:3e:f3:df:36 | {"subnet_id": "ce3ae364-50bb-4495    |
+| 0d                                 | external_port1-lyfkuuo5s3pj        |                   | -bb6e-9502ae1484f0", "ip_address":   |
+|                                    |                                    |                   | "172.16.11.101"}                     |
+| 84163efd-35ab-49db-9c7d-           | ePDG-CSM-5-VTH-1-3                 | fa:16:3e:ae:bc:70 | {"subnet_id": "edb2765a-fe3a-452b-   |
+| 8b5fcf2766c9                       |                                    |                   | ba91-63db55d99604", "ip_address":    |
+|                                    |                                    |                   | "169.254.50.1"}                      |
+| 8417e598-14e1-442e-84ff-           | ePDG-SSM-5-VTH-5-4                 | fa:16:3e:84:b0:9f | {"subnet_id": "56614aa5-32c8-4d96-90 |
+| 7af539b76b97                       |                                    |                   | f2-9fcc1c515141", "ip_address":      |
+|                                    |                                    |                   | "172.16.37.105"}                     |
+| 84f372b4-af28-47a2-92d5-fe32f2d322 | SSM-5-VTH-5-4                      | fa:16:3e:ff:fa:0b | {"subnet_id": "9f1ecca3-7e69-4dfb-   |
+| 04                                 |                                    |                   | a32a-8c4057fcd6c5", "ip_address":    |
+|                                    |                                    |                   | "172.16.17.105"}                     |
+| 8ba18917-4dc3-4275-a2a3-814faabf98 | MCM-7-OAM-IP                       | fa:16:3e:ec:c7:6b | {"subnet_id": "be1db483-f38e-410b-   |
+| 3b                                 |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.121"}                     |
+| 8d8e3d80-1ba1-4963-bdac-           | COM-HSS-Provider2                  | fa:16:3e:18:62:22 | {"subnet_id": "5af071b9-454d-42cc-   |
+| 710e4c136434                       |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.224"}                    |
+| 8d99aebd-                          | vMME-LB-port2-7kreoij5o6lx         | fa:16:3e:77:0c:74 | {"subnet_id": "70fd41d9-1a3c-4dd0    |
+| 53c3-4b62-98b2-f4b7d091de73        |                                    |                   | -a20c-d9bdb7d093e8", "ip_address":   |
+|                                    |                                    |                   | "169.254.200.170"}                   |
+| 8df15d20-cff1-4d25-8463-42c6e76b32 | VYOS_Provider_Private              | fa:16:3e:6c:cd:e8 | {"subnet_id": "5af071b9-454d-42cc-   |
+| 90                                 |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.112"}                    |
+| 91085cc2-d1d0-42c4-937f-           | SSM-5-VTH-5-5                      | fa:16:3e:bf:5b:7d | {"subnet_id": "4d5d4e6c-e10a-45d0    |
+| 272a6ae7ebd4                       |                                    |                   | -8ccb-48b2db3cf196", "ip_address":   |
+|                                    |                                    |                   | "169.254.50.5"}                      |
+| 927f7718-231a-49bd-                | vMME-RM-port2-5t2ijhhlv3xt         | fa:16:3e:64:35:06 | {"subnet_id": "70fd41d9-1a3c-4dd0    |
+| bde6-4d350b9f70f8                  |                                    |                   | -a20c-d9bdb7d093e8", "ip_address":   |
+|                                    |                                    |                   | "169.254.200.5"}                     |
+| 9316eb78-c7b0-41c2-9af3-0a02219ee6 |                                    | fa:16:3e:ae:d8:2c | {"subnet_id": "4a29a7d4-90c8-4bad-   |
+| 9a                                 |                                    |                   | 9bec-a3da00d4da2b", "ip_address":    |
+|                                    |                                    |                   | "172.16.31.16"}                      |
+| 97d71282-af19-46a3-9e24-57d1791131 |                                    | fa:16:3e:81:30:7e | {"subnet_id": "a053df43-3004-487c-   |
+| 44                                 |                                    |                   | ad05-d51b75860558", "ip_address":    |
+|                                    |                                    |                   | "172.16.80.5"}                       |
+| 986e354a-8245-4d99-b22c-           | ePDG-PHY-SSM-5-VTH-5-4             | fa:16:3e:dc:4a:f1 | {"subnet_id": "1d480eda-5026-425a-   |
+| 63047b269219                       |                                    |                   | 8e25-de06e392944b", "ip_address":    |
+|                                    |                                    |                   | "172.16.47.105"}                     |
+| 99877205-ce82-419b-911c-           | mcm-vip                            | fa:16:3e:ab:02:f0 | {"subnet_id": "be1db483-f38e-410b-   |
+| 9b2d89d33b2f                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.124"}                     |
+| 9aa00c79-8176-492e-                | ECAS_MRF                           | fa:16:3e:a3:00:45 | {"subnet_id": "be214b44-5cd3-4d71    |
+| b0f2-a56a30cde7ba                  |                                    |                   | -bbea-42d01016c7b1", "ip_address":   |
+|                                    |                                    |                   | "172.16.25.7"}                       |
+| 9ad27638-8c6e-432b-9cac-           | ePDG-PHY-MCM-7-OAM-IP              | fa:16:3e:51:24:53 | {"subnet_id": "be1db483-f38e-410b-   |
+| f789a3966c44                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.161"}                     |
+| 9b7f79fa-                          |                                    | fa:16:3e:98:93:b8 | {"subnet_id": "a9ca3711-11b8-48a8-b0 |
+| 90e4-4288-b313-97956929211e        |                                    |                   | 62-33d8b923bb27", "ip_address":      |
+|                                    |                                    |                   | "172.16.70.9"}                       |
+| 9c3c0aa3-3d9b-                     |                                    | fa:16:3e:a6:92:08 | {"subnet_id": "aeb65f62-18f0-486e-93 |
+| 41b2-9740-66e69985b4da             |                                    |                   | 93-33f7112e9d94", "ip_address":      |
+|                                    |                                    |                   | "172.16.16.5"}                       |
+| 9c98d2ee-d211-44f0-9344-5a7c65bbee |                                    | fa:16:3e:2d:6a:74 | {"subnet_id": "4a29a7d4-90c8-4bad-   |
+| 41                                 |                                    |                   | 9bec-a3da00d4da2b", "ip_address":    |
+|                                    |                                    |                   | "172.16.31.13"}                      |
+| 9cb1ba50-5a6a-                     |                                    | fa:16:3e:d5:1a:f4 | {"subnet_id": "a13ba487-778b-4a76    |
+| 42a4-b791-ee107a19ee4c             |                                    |                   | -8cfe-7e3a9412b06f", "ip_address":   |
+|                                    |                                    |                   | "172.16.90.1"}                       |
+| 9eced13d-fbe9-42fb-                |                                    | fa:16:3e:6d:13:7c | {"subnet_id": "98c66416-e05d-        |
+| 9c21-aa413ed8e058                  |                                    |                   | 45ce-8561-e0c99fa2aa72",             |
+|                                    |                                    |                   | "ip_address": "172.16.32.8"}         |
+| 9f301de6-55af-4809-a960-d49ca09c3f |                                    | fa:16:3e:75:5f:29 | {"subnet_id": "98c66416-e05d-        |
+| f4                                 |                                    |                   | 45ce-8561-e0c99fa2aa72",             |
+|                                    |                                    |                   | "ip_address": "172.16.32.10"}        |
+| a1106f8c-73fb-420d-                |                                    | fa:16:3e:8d:c6:21 | {"subnet_id": "a13ba487-778b-4a76    |
+| ad45-1e16e26ede9f                  |                                    |                   | -8cfe-7e3a9412b06f", "ip_address":   |
+|                                    |                                    |                   | "172.16.90.2"}                       |
+| a25084b9-c536-4e41-90e6-a61cb526db |                                    | fa:16:3e:bb:59:01 | {"subnet_id": "8ee1cbad-fba1-40dd-   |
+| 15                                 |                                    |                   | 8dd4-1f639a20df47", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.9"}                       |
+| a4eb20a1-5f34-498c-b719-191f54046a |                                    | fa:16:3e:5d:c9:8a | {"subnet_id": "8ee1cbad-fba1-40dd-   |
+| d8                                 |                                    |                   | 8dd4-1f639a20df47", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.5"}                       |
+| a5184689-60a1-490b-986a-           |                                    | fa:16:3e:c6:65:ca | {"subnet_id": "aeb65f62-18f0-486e-93 |
+| 3530ee4293e2                       |                                    |                   | 93-33f7112e9d94", "ip_address":      |
+|                                    |                                    |                   | "172.16.16.1"}                       |
+| a5cf1bcb-e4ed-                     |                                    | fa:16:3e:53:22:df | {"subnet_id": "98c66416-e05d-        |
+| 48c8-a1d1-852117e5df19             |                                    |                   | 45ce-8561-e0c99fa2aa72",             |
+|                                    |                                    |                   | "ip_address": "172.16.32.2"}         |
+| a748fc9e-8058-4abf-840d-           |                                    | fa:16:3e:cf:fd:4e | {"subnet_id": "4780480f-db2f-45a5    |
+| 973af010222e                       |                                    |                   | -9bce-b30ddae336dd", "ip_address":   |
+|                                    |                                    |                   | "172.16.24.1"}                       |
+| aa11b3db-9bb7-40cd-                | ePDG-PHY-MCM-VIP                   | fa:16:3e:29:63:d2 | {"subnet_id": "be1db483-f38e-410b-   |
+| bec1-2a439de0b977                  |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.164"}                     |
+| ab660c04-1aa5-45ee-9579-06398af92b | VYOS_Provider_Public               | fa:16:3e:fe:a6:dd | {"subnet_id": "f4702f21-ba27-4601-8b |
+| 55                                 |                                    |                   | 91-023ecf217f51", "ip_address":      |
+|                                    |                                    |                   | ""}                    |
+| ac63fb35-7d0d-4827-a521-688ca310e5 | ECAS_IMS_INTERNAL_CSM_ECAS         | fa:16:3e:14:28:89 | {"subnet_id": "208cec1d-             |
+| 55                                 |                                    |                   | 0c59-4b69-9978-8e4bbb3a407a",        |
+|                                    |                                    |                   | "ip_address": "172.16.22.5"}         |
+| ada3e1d6-bf87-4648-b946-92b2a3bf58 |                                    | fa:16:3e:1a:c3:c6 | {"subnet_id": "f4702f21-ba27-4601-8b |
+| 89                                 |                                    |                   | 91-023ecf217f51", "ip_address":      |
+|                                    |                                    |                   | ""}                    |
+| ae5bb77a-14a3-450d-8d6b-           | Jumpbox-Provider2                  | fa:16:3e:91:25:56 | {"subnet_id": "5af071b9-454d-42cc-   |
+| ed3577d6c06e                       |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.114"}                    |
+| aea71b4b-02ae-                     |                                    | fa:16:3e:b3:d4:c0 | {"subnet_id": "5ef5fe16-2835-4d80-81 |
+| 410f-a564-c12d7076fea7             |                                    |                   | 37-dae0a363b4a8", "ip_address":      |
+|                                    |                                    |                   | "172.16.0.2"}                        |
+| b05dc2da-b94a-48af-b12a-           |                                    | fa:16:3e:ab:32:20 | {"subnet_id": "a053df43-3004-487c-   |
+| a6cc1dc1ba4d                       |                                    |                   | ad05-d51b75860558", "ip_address":    |
+|                                    |                                    |                   | "172.16.80.7"}                       |
+| b0a39c03-53f4-4294-aacb-           | EPC-HSS-Provider2                  | fa:16:3e:64:6c:51 | {"subnet_id": "5af071b9-454d-42cc-   |
+| 8685a2010482                       |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.108"}                    |
+| b12f5ac5-f3c1-4b92-b242-16900fa6ab |                                    | fa:16:3e:eb:5d:ea | {"subnet_id": "4780480f-db2f-45a5    |
+| cf                                 |                                    |                   | -9bce-b30ddae336dd", "ip_address":   |
+|                                    |                                    |                   | "172.16.24.4"}                       |
+| b21ecd61-4878-45f1-83ca-           | ePDG-SSM-5-VTH-5-5                 | fa:16:3e:89:16:f4 | {"subnet_id": "edb2765a-fe3a-452b-   |
+| 46b45e5fa222                       |                                    |                   | ba91-63db55d99604", "ip_address":    |
+|                                    |                                    |                   | "169.254.50.5"}                      |
+| b3758bdc-10df-                     | vMME-CALLP-port1-tp3rcgakvq72      | fa:16:3e:de:2c:7b | {"subnet_id": "f6214153-4ec2-4601-8e |
+| 4e6b-a777-f222fd0fca4f             |                                    |                   | 24-63effa73f39d", "ip_address":      |
+|                                    |                                    |                   | "169.254.101.10"}                    |
+| b4e7dc5a-                          |                                    | fa:16:3e:02:6e:c6 | {"subnet_id": "5af071b9-454d-42cc-   |
+| 46b0-4a5e-b636-3e6589f904df        |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.102"}                    |
+| b5315fb0-e15c-                     | ePDG-PHY-CSM-5-VTH-1-3             | fa:16:3e:06:f0:2e | {"subnet_id": "2205a9f1-eaa8-4072-84 |
+| 442f-8182-3b13935d2f9c             |                                    |                   | 63-474e7c7965cd", "ip_address":      |
+|                                    |                                    |                   | "169.254.50.1"}                      |
+| b726f528-4b88-480e-8ccb-           |                                    | fa:16:3e:83:8c:4f | {"subnet_id": "a053df43-3004-487c-   |
+| 440c51d16f84                       |                                    |                   | ad05-d51b75860558", "ip_address":    |
+|                                    |                                    |                   | "172.16.80.1"}                       |
+| b9009ce4-b6ad-4126-b5a9-cdf64e4f3e | ePDG-PHY-CSM-1-VTH-1-2             | fa:16:3e:99:00:69 | {"subnet_id": "1d480eda-5026-425a-   |
+| 58                                 |                                    |                   | 8e25-de06e392944b", "ip_address":    |
+|                                    |                                    |                   | "172.16.47.106"}                     |
+| ba23c036-d549-46bb-9498-8be1e52abf |                                    | fa:16:3e:40:c4:49 | {"subnet_id": "4a29a7d4-90c8-4bad-   |
+| 7d                                 |                                    |                   | 9bec-a3da00d4da2b", "ip_address":    |
+|                                    |                                    |                   | "172.16.31.8"}                       |
+| bdc14bb3-590b-                     | vMME-RM-port0-lqaijfn6vka2         | fa:16:3e:93:a4:b9 | {"subnet_id": "be1db483-f38e-410b-   |
+| 48c5-a785-cc4cabddd790             |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.131"}                     |
+| bf235586-683e-40fd-96aa-           |                                    | fa:16:3e:2f:87:18 | {"subnet_id": "2205a9f1-eaa8-4072-84 |
+| 3b59f9b44c6c                       |                                    |                   | 63-474e7c7965cd", "ip_address":      |
+|                                    |                                    |                   | "169.254.0.1"}                       |
+| c005058d-8203-441a-                |                                    | fa:16:3e:ae:b8:62 | {"subnet_id": "edb2765a-fe3a-452b-   |
+| b9f2-5f5b3f175fa3                  |                                    |                   | ba91-63db55d99604", "ip_address":    |
+|                                    |                                    |                   | "169.254.0.1"}                       |
+| c074008c-                          |                                    | fa:16:3e:6c:ef:1f | {"subnet_id": "b55d7a4b-3f05-434e-   |
+| 9aea-4523-b059-e90a43c444e7        |                                    |                   | 998e-a0a91c19b587", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.7"}                       |
+| c083d667-c71d-                     | ePDG-PHY-SSM-5-VTH-5-2             | fa:16:3e:60:17:73 | {"subnet_id": "2d9fe1f2-0ada-4910-91 |
+| 49b9-95f9-42e96c82dc95             |                                    |                   | d7-e71b02351558", "ip_address":      |
+|                                    |                                    |                   | "172.16.14.205"}                     |
+| c13e0d1c-                          | vMME-CALLP-port2-hch2s6bjs5yc      | fa:16:3e:b1:20:43 | {"subnet_id": "70fd41d9-1a3c-4dd0    |
+| 342b-4925-9ff6-11ce6740dbea        |                                    |                   | -a20c-d9bdb7d093e8", "ip_address":   |
+|                                    |                                    |                   | "169.254.200.10"}                    |
+| c2d81ff7-154c-4b2f-801e-           |                                    | fa:16:3e:89:3c:0e | {"subnet_id": "98c66416-e05d-        |
+| 7c5b2a5d26c2                       |                                    |                   | 45ce-8561-e0c99fa2aa72",             |
+|                                    |                                    |                   | "ip_address": "172.16.32.9"}         |
+| c66d0d41-c8a6-4341-8a0e-           |                                    | fa:16:3e:60:77:61 | {"subnet_id": "b55d7a4b-3f05-434e-   |
+| 5610b4a5fc5f                       |                                    |                   | 998e-a0a91c19b587", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.13"}                      |
+| c8dd5fd2-d98b-4cab-91fc-           | SSM-5-VTH-5-2                      | fa:16:3e:2f:e8:46 | {"subnet_id": "2d9fe1f2-0ada-4910-91 |
+| e29df6e7c395                       |                                    |                   | d7-e71b02351558", "ip_address":      |
+|                                    |                                    |                   | "172.16.14.105"}                     |
+| c9f0c8e3-8f2f-4b14-a38e-           |                                    | fa:16:3e:e8:a3:00 | {"subnet_id": "70c7332a-6c0c-412b-   |
+| 20815887ee6c                       |                                    |                   | b9fa-f9d10b97d064", "ip_address":    |
+|                                    |                                    |                   | "172.16.60.2"}                       |
+| cac83cf6-6398-4073-96d0-4047e1ee73 |                                    | fa:16:3e:1a:bd:27 | {"subnet_id": "8ee1cbad-fba1-40dd-   |
+| a5                                 |                                    |                   | 8dd4-1f639a20df47", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.2"}                       |
+| cc0f9101-1133-4e5b-a8ab-           | vMME-MGMT-port0-556wrvs62wol       | fa:16:3e:72:ce:d5 | {"subnet_id": "be1db483-f38e-410b-   |
+| a0de52c05a5f                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.130"}                     |
+| ccb59857-e166-4ada-865e-           | MCM-BASE                           | fa:16:3e:65:39:96 | {"subnet_id": "4d5d4e6c-e10a-45d0    |
+| 87f021cc0db8                       |                                    |                   | -8ccb-48b2db3cf196", "ip_address":   |
+|                                    |                                    |                   | "169.254.50.71"}                     |
+| cf57ce17-1c0a-                     | HSS_Gn                             | fa:16:3e:4a:53:24 | {"subnet_id": "ce3ae364-50bb-4495    |
+| 4cc9-ba56-110eaf6fb4e8             |                                    |                   | -bb6e-9502ae1484f0", "ip_address":   |
+|                                    |                                    |                   | "172.16.11.4"}                       |
+| d004fbb2-8813-48ea-b1ac-           |                                    | fa:16:3e:d9:60:fb | {"subnet_id": "2cc907cd-118b-4dbc-   |
+| 5bcecce4d146                       |                                    |                   | 8bdd-c0d31da6dad7", "ip_address":    |
+|                                    |                                    |                   | "172.16.15.6"}                       |
+| d1f18a5d-879f-4296-aade-           | vMME-LB-port0-wdxpyvpvhsuh         | fa:16:3e:fd:11:35 | {"subnet_id": "be1db483-f38e-410b-   |
+| 8e5ce057fd3f                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.132"}                     |
+| d285881a-9895-456e-                |                                    | fa:16:3e:ce:11:4d | {"subnet_id": "98c66416-e05d-        |
+| bfa1-012930eee6b6                  |                                    |                   | 45ce-8561-e0c99fa2aa72",             |
+|                                    |                                    |                   | "ip_address": "172.16.32.13"}        |
+| d556de84-31fb-                     | BBU_Gn                             | fa:16:3e:37:67:4d | {"subnet_id": "ce3ae364-50bb-4495    |
+| 4c7e-a303-92b32e674d4d             |                                    |                   | -bb6e-9502ae1484f0", "ip_address":   |
+|                                    |                                    |                   | "172.16.11.3"}                       |
+| d5639b80-791e-49ac-                | vBBU-FrontHaul                     | fa:16:3e:c0:18:52 | {"subnet_id": "f4702f21-ba27-4601-8b |
+| a5a6-4800d816312c                  |                                    |                   | 91-023ecf217f51", "ip_address":      |
+|                                    |                                    |                   | ""}                    |
+| d5ec57c4-b3dc-                     |                                    | fa:16:3e:e9:ca:6a | {"subnet_id": "be1db483-f38e-410b-   |
+| 450c-b364-7d709ba25431             |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.204"}                     |
+| d7d18420-8f92-46da-b36b-           | EPC-HSS-OAM                        | fa:16:3e:22:9c:c4 | {"subnet_id": "be1db483-f38e-410b-   |
+| adaa97926965                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.212"}                     |
+| d846933d-49e5-4339-9f8d-           | ePDG-SSM-SWu                       | fa:16:3e:e5:65:20 | {"subnet_id": "5af071b9-454d-42cc-   |
+| 2fe4556d1eac                       |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.116"}                    |
+| d911b1f0-58dd-401d-                |                                    | fa:16:3e:74:dc:78 | {"subnet_id": "4a29a7d4-90c8-4bad-   |
+| 8f88-a8c6cbfb4320                  |                                    |                   | 9bec-a3da00d4da2b", "ip_address":    |
+|                                    |                                    |                   | "172.16.31.14"}                      |
+| da898b7b-                          | COM-HSS-Gn                         | fa:16:3e:02:c4:8d | {"subnet_id": "ce3ae364-50bb-4495    |
+| e0c4-4224-bfb3-f986d693bfde        |                                    |                   | -bb6e-9502ae1484f0", "ip_address":   |
+|                                    |                                    |                   | "172.16.11.224"}                     |
+| dc91d4b1-0ed4-40f8-ac14-001adc64fb | ePDG-PHY-SSM-5-VTH-5-5             | fa:16:3e:35:98:97 | {"subnet_id": "2205a9f1-eaa8-4072-84 |
+| 5a                                 |                                    |                   | 63-474e7c7965cd", "ip_address":      |
+|                                    |                                    |                   | "169.254.50.5"}                      |
+| ddb037ea-                          |                                    | fa:16:3e:9b:1e:10 | {"subnet_id": "4a29a7d4-90c8-4bad-   |
+| 890f-4893-8d88-0d197be063fb        |                                    |                   | 9bec-a3da00d4da2b", "ip_address":    |
+|                                    |                                    |                   | "172.16.31.12"}                      |
+| dedb204e-                          | vMME-SIG-port2-p5wfly2xpfce        | fa:16:3e:4c:96:fc | {"subnet_id": "70fd41d9-1a3c-4dd0    |
+| 16de-4473-b015-e686a7263308        |                                    |                   | -a20c-d9bdb7d093e8", "ip_address":   |
+|                                    |                                    |                   | "169.254.200.60"}                    |
+| dfdf7c1c-db7b-4966-89fb-           | SBC_Rx                             | fa:16:3e:8e:17:80 | {"subnet_id": "aeb65f62-18f0-486e-93 |
+| 5b8a5be067fc                       |                                    |                   | 93-33f7112e9d94", "ip_address":      |
+|                                    |                                    |                   | "172.16.16.4"}                       |
+| e52c89a1-d93f-469c-970f-           | ECAS_HSS_IMS                       | fa:16:3e:c9:6b:a2 | {"subnet_id": "c732177c-             |
+| 3267dfb7a85b                       |                                    |                   | 80d6-4bfe-9436-a99124f86e6d",        |
+|                                    |                                    |                   | "ip_address": "172.16.23.3"}         |
+| e62b0d3a-3123-4f1d-b6ab-           |                                    | fa:16:3e:94:d6:b6 | {"subnet_id": "5af071b9-454d-42cc-   |
+| dec8c7e24bbc                       |                                    |                   | 9dbf-5f114b152520", "ip_address":    |
+|                                    |                                    |                   | "172.16.100.115"}                    |
+| e65a0872-1152-460e-                |                                    | fa:16:3e:a5:de:2e | {"subnet_id": "98c66416-e05d-        |
+| aad6-3c467bd8d89e                  |                                    |                   | 45ce-8561-e0c99fa2aa72",             |
+|                                    |                                    |                   | "ip_address": "172.16.32.15"}        |
+| e7813f1f-2717-4804-b38d-           | BBU_OAM                            | fa:16:3e:e6:b3:f2 | {"subnet_id": "be1db483-f38e-410b-   |
+| 93053a62b566                       |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.20"}                      |
+| ebab5fd0-1752-44b8-9f70-365dbae0c2 |                                    | fa:16:3e:73:e1:02 | {"subnet_id": "8ee1cbad-fba1-40dd-   |
+| a9                                 |                                    |                   | 8dd4-1f639a20df47", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.17"}                      |
+| ee3bddb7-319d-403f-9ecc-           |                                    | fa:16:3e:93:05:14 | {"subnet_id": "2cc907cd-118b-4dbc-   |
+| 4811fbecb5f0                       |                                    |                   | 8bdd-c0d31da6dad7", "ip_address":    |
+|                                    |                                    |                   | "172.16.15.9"}                       |
+| ef62223c-                          | vMME-CALLP-port0-7ythbpvmghu2      | fa:16:3e:f9:8d:b5 | {"subnet_id": "be1db483-f38e-410b-   |
+| ea93-4016-a726-bf17ff68f86f        |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.133"}                     |
+| f1cc54ac-                          | ePDG-PHY-CSM-1-OAM-IP              | fa:16:3e:dc:74:e7 | {"subnet_id": "be1db483-f38e-410b-   |
+| 6ee9-4097-ad67-d1388ed53c1c        |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.163"}                     |
+| f5bd589d-1472-4e09-a2a1-58da2fe3f8 |                                    | fa:16:3e:3b:d8:2f | {"subnet_id": "8ee1cbad-fba1-40dd-   |
+| 78                                 |                                    |                   | 8dd4-1f639a20df47", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.6"}                       |
+| f6aa8e52-707b-                     |                                    | fa:16:3e:24:be:43 | {"subnet_id": "56614aa5-32c8-4d96-90 |
+| 4ea7-a891-bbb99b9fb5d4             |                                    |                   | f2-9fcc1c515141", "ip_address":      |
+|                                    |                                    |                   | "172.16.37.2"}                       |
+| f7ffabb7-2c80-462c-                | SBC_OAM                            | fa:16:3e:89:be:0e | {"subnet_id": "be1db483-f38e-410b-   |
+| 8b20-1c2068b363d5                  |                                    |                   | aebf-8a3e34e47506", "ip_address":    |
+|                                    |                                    |                   | "172.16.50.8"}                       |
+| f80b036c-2147-4bb8-bb3a-c616812360 |                                    | fa:16:3e:24:b5:bc | {"subnet_id": "b55d7a4b-3f05-434e-   |
+| 05                                 |                                    |                   | 998e-a0a91c19b587", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.16"}                      |
+| fae1cc7a-23eb-                     |                                    | fa:16:3e:30:15:39 | {"subnet_id": "b55d7a4b-3f05-434e-   |
+| 4b36-a398-7cff15290ed4             |                                    |                   | 998e-a0a91c19b587", "ip_address":    |
+|                                    |                                    |                   | "172.16.33.12"}                      |
+| fae3dc10-b975-4e9e-8adf-           | vMME-SIG-port1-cscnnjeuj6hj        | fa:16:3e:1c:38:96 | {"subnet_id": "f6214153-4ec2-4601-8e |
+| 6dfa783dc6e9                       |                                    |                   | 24-63effa73f39d", "ip_address":      |
+|                                    |                                    |                   | "169.254.101.60"}                    |
++------------------------------------+------------------------------------+-------------------+--------------------------------------+
+
+
+[techm@director ~]$ neutron port-show ae5bb77a-14a3-450d-8d6b-ed3577d6c06e
++-----------------------+---------------------------------------------------------------------------------------+
+| Field                 | Value                                                                                 |
++-----------------------+---------------------------------------------------------------------------------------+
+| admin_state_up        | True                                                                                  |
+| allowed_address_pairs |                                                                                       |
+| binding:host_id       | overcloud-compute-0.localdomain                                                       |
+| binding:profile       | {}                                                                                    |
+| binding:vif_details   | {"port_filter": true, "ovs_hybrid_plug": true}                                        |
+| binding:vif_type      | ovs                                                                                   |
+| binding:vnic_type     | normal                                                                                |
+| created_at            | 2017-03-16T00:21:13Z                                                                  |
+| description           |                                                                                       |
+| device_id             | 57a48b20-1876-4c5f-99cf-e663eccb0538                                                  |
+| device_owner          | compute:Comp-0                                                                        |
+| extra_dhcp_opts       |                                                                                       |
+| fixed_ips             | {"subnet_id": "5af071b9-454d-42cc-9dbf-5f114b152520", "ip_address": "172.16.100.114"} |
+| id                    | ae5bb77a-14a3-450d-8d6b-ed3577d6c06e                                                  |
+| mac_address           | fa:16:3e:91:25:56                                                                     |
+| name                  | Jumpbox-Provider2                                                                     |
+| network_id            | 5fd8efaa-71b8-49cc-ad91-ebbbb0f916ba                                                  |
+| port_security_enabled | True                                                                                  |
+| project_id            | 4340928735c04db7b660243c3d5bc02a                                                      |
+| qos_policy_id         |                                                                                       |
+| revision_number       | 29                                                                                    |
+| security_groups       | e58bfe25-89f5-42eb-b569-c0fa542b9b45                                                  |
+| status                | ACTIVE                                                                                |
+| tenant_id             | 4340928735c04db7b660243c3d5bc02a                                                      |
+| updated_at            | 2017-04-17T19:54:42Z                                                                  |
++-----------------------+---------------------------------------------------------------------------------------+
+[techm@director ~]$
+[techm@director ~]$
+[techm@director ~]$ neutron port-show 35d697ad-42ab-4933-a5af-b382c9fd08ec
++-----------------------+---------------------------------------------------------------------------------------+
+| Field                 | Value                                                                                 |
++-----------------------+---------------------------------------------------------------------------------------+
+| admin_state_up        | True                                                                                  |
+| allowed_address_pairs |                                                                                       |
+| binding:host_id       | overcloud-compute-0.localdomain                                                       |
+| binding:profile       | {}                                                                                    |
+| binding:vif_details   | {"port_filter": true, "ovs_hybrid_plug": true}                                        |
+| binding:vif_type      | ovs                                                                                   |
+| binding:vnic_type     | normal                                                                                |
+| created_at            | 2017-03-16T00:19:08Z                                                                  |
+| description           |                                                                                       |
+| device_id             | 57a48b20-1876-4c5f-99cf-e663eccb0538                                                  |
+| device_owner          | compute:Comp-0                                                                        |
+| extra_dhcp_opts       |                                                                                       |
+| fixed_ips             | {"subnet_id": "f4702f21-ba27-4601-8b91-023ecf217f51", "ip_address": "X>X>XX"} |
+| id                    | 35d697ad-42ab-4933-a5af-b382c9fd08ec                                                  |
+| mac_address           | fa:16:3e:1f:0c:4a                                                                     |
+| name                  | Jumpbox-Provider-Public                                                               |
+| network_id            | d3e2d066-e191-4e64-bb72-b1826396755f                                                  |
+| port_security_enabled | False                                                                                 |
+| project_id            | 4340928735c04db7b660243c3d5bc02a                                                      |
+| qos_policy_id         |                                                                                       |
+| revision_number       | 35                                                                                    |
+| security_groups       |                                                                                       |
+| status                | ACTIVE                                                                                |
+| tenant_id             | 4340928735c04db7b660243c3d5bc02a                                                      |
+| updated_at            | 2017-04-17T19:54:40Z                                                                  |
++-----------------------+---------------------------------------------------------------------------------------+
+
+[techm@director ~]$ neutron net-show 0f29ee0b-f18b-4444-a182-bdd9d89965c6
++---------------------------+--------------------------------------+
+| Field                     | Value                                |
++---------------------------+--------------------------------------+
+| admin_state_up            | True                                 |
+| availability_zone_hints   |                                      |
+| availability_zones        | nova                                 |
+| created_at                | 2017-02-20T16:01:20Z                 |
+| description               |                                      |
+| id                        | 0f29ee0b-f18b-4444-a182-bdd9d89965c6 |
+| ipv4_address_scope        |                                      |
+| ipv6_address_scope        |                                      |
+| mtu                       | 1650                                 |
+| name                      | TechM_OAM_Net                        |
+| port_security_enabled     | True                                 |
+| project_id                | 4340928735c04db7b660243c3d5bc02a     |
+| provider:network_type     | vxlan                                |
+| provider:physical_network |                                      |
+| provider:segmentation_id  | 38                                   |
+| qos_policy_id             |                                      |
+| revision_number           | 7                                    |
+| router:external           | False                                |
+| shared                    | True                                 |
+| status                    | ACTIVE                               |
+| subnets                   | be1db483-f38e-410b-aebf-8a3e34e47506 |
+| tags                      |                                      |
+| tenant_id                 | 4340928735c04db7b660243c3d5bc02a     |
+| updated_at                | 2017-02-21T01:27:36Z                 |
++---------------------------+--------------------------------------+
+
+
+TechM_OAM_Net
+
+172.16.50.210
+Provider_Public_Net
+
+X>X>X>X
+Provider2
+
+172.16.100.114
+
+1765175b-dfe2-4758-9c3a-08da766461a5
+
+be1db483-f38e-410b-aebf-8a3e34e47506
+
+neutron port-create TechM_OAM_JumpBox --fixed-ip subnet_id=be1db483-f38e-410b-aebf-8a3e34e47506,ip_address=172.16.50.210 --name TechM_OAM_JumpBox
+
+1.detach
+You can do it from dashboard
+
+2.port-delete
+neutron port-delete <port string id>
+
+3. port-create
+neutron port-create TechM_Metadata_net --fixed-ip subnet_id=3fe8a0f2-c1e3-4d2c-893b-9f619868831b,ip_address=172.16.28.7 --name BBU_METADATA
+
+4.nova inteface-attach
+
+nova interface-attach e6fc0f59-cfdc-42d3-9fab-4a72f8eef574 --port-id 91345405-d7f3-4790-a867-47c34c11fca7
+
+nova interface-attach 57a48b20-1876-4c5f-99cf-e663eccb0538 --port-id fa803e0d-0cf1-4182-b6f6-e094edec741f  >>>> JUmpbox 
+
+[techm@director ~]$ nova interface-attach 57a48b20-1876-4c5f-99cf-e663eccb0538 --port-id 9c5e681b-1a99-4eee-b987-9022460b46c5 >> Jumpbox Provider public
+ERROR (ClientException): Unexpected API Error. Please report this at http://bugs.launchpad.net/nova/ and attach the Nova API log if possible.
+<class 'PortBindingFailed_Remote'> (HTTP 500) (Request-ID: req-bca98b46-f889-40dc-8705-448aaeceed0d)
+
+[techm@director ~]$ nova interface-attach 57a48b20-1876-4c5f-99cf-e663eccb0538 --port-id 376cdeba-9ac9-4c58-aff9-448e6bb1c719  >>> Jumpbox Provider2
+
+[techm@director ~]$ neutron port-list | grep 0.202.170.115
+| 35d697ad-42ab-4933-a5af-b382c9fd08ec | Jumpbox-Provider-Public             | fa:16:3e:1f:0c:4a | {"subnet_id": "f4702f21-ba27-4601-8b91-023ecf217f51", "ip_address": "X>X>X>X"}  |
+
+[techm@director ~]$ neutron port-list | grep 172.16.100.114
+| ae5bb77a-14a3-450d-8d6b-ed3577d6c06e | Jumpbox-Provider2                   | fa:16:3e:91:25:56 | {"subnet_id": "5af071b9-454d-42cc-9dbf-5f114b152520", "ip_address": "172.16.100.114"}  |
+
+
+[stack@director ~]$ nova list
++--------------------------------------+------------------------+--------+------------+-------------+---------------------+
+| ID                                   | Name                   | Status | Task State | Power State | Networks            |
++--------------------------------------+------------------------+--------+------------+-------------+---------------------+
+| bc3bc131-4a51-411b-a225-a3c3f20a39af | overcloud-compute-0    | ACTIVE | -          | Running     | ctlplane=192.0.8.11 |
+| 429e8253-a006-4012-ad63-61630b7ff98b | overcloud-compute-1    | ACTIVE | -          | Running     | ctlplane=192.0.8.19 |
+| 152a4ac7-b730-40da-91f9-91f4db632368 | overcloud-compute-2    | ACTIVE | -          | Running     | ctlplane=192.0.8.8  |
+| d8bf698e-e289-4b08-8d55-a75228ef456c | overcloud-controller-0 | ACTIVE | -          | Running     | ctlplane=192.0.8.15 |
++--------------------------------------+------------------------+--------+------------+-------------+---------------------+
