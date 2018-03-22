@@ -1,0 +1,27 @@
+#!/usr/bin/expect
+
+# Contact Lance for any queries
+
+set timeout 60
+
+set user "lance"
+set host "192.168.x.x"
+set passwd "lance"
+set source "lance-openrc.sh"
+set pw_file "lance"
+set stack "stack"
+set stackrc "stackrc"
+set op_cmd "openstack server list"
+
+spawn ssh [lindex $user ]@[lindex $host]
+
+expect "yes/no" {
+        send "yes\r"
+        expect "*?assword" { send "[lindex $passwd]\r" }
+        } "*?assword" { send "[lindex $passwd]\r" }
+
+expect "$ " { send "su - [lindex $stack]\r" }
+expect "*?assword" { send "[lindex $passwd]\r" }
+expect "$ " { send "source [lindex $stackrc]\r" }
+send "[lindex $op_cmd]\r"
+interact
