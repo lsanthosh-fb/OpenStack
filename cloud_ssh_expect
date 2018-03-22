@@ -1,0 +1,22 @@
+#!/usr/bin/expect
+
+#Usage sshsudologin.expect <host> <ssh user> <ssh password> <su user> <su password>
+
+set timeout 60
+
+set user "lance"
+set host "192.168.x.x"
+set passwd "lance"
+set source "lance-openrc.sh"
+set pw_file "lance"
+
+spawn ssh [lindex $user ]@[lindex $host]
+
+expect "yes/no" {
+        send "yes\r"
+        expect "*?assword" { send "[lindex $passwd]\r" }
+        } "*?assword" { send "[lindex $passwd]\r" }
+
+expect "$ " { send "source [lindex $source]\r" }
+expect "*OpenStack Password*" { send "[lindex $pw_file]\r" }
+interact
