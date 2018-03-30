@@ -30,7 +30,9 @@ openstack port create --network <NET_ID/NAME> --fixed-ip subnet=<SUBNET_ID>,ip-a
 
 Network Creation:-
 =================
-openstack subnet create <SUBNET_NAME> --project <PROJECT_ID> --subnet-range 169.254.0.0/16 --allocation-pool start=10.101.2.11,end=10.101.2.100 --gateway 10.101.2.1 --network <NET_NAME> --service-type 'compute:nova'
+neutron net-create CLOUD1-GW-BASE-INT-NET --shared
+
+openstack subnet create <SUBNET_NAME> --project <PROJECT_ID> --subnet-range 10.101.200.0/24 --allocation-pool start=10.101.200.11,end=10.101.200.100 --gateway 10.101.200.1 --network <NET_NAME> --service-type 'compute:nova'
 
 Nova Boot:-
 ==========
