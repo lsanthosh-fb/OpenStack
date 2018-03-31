@@ -37,3 +37,5 @@ openstack subnet create <SUBNET_NAME> --project <PROJECT_ID> --subnet-range 10.1
 Nova Boot:-
 ==========
 nova boot --image <IMAGE_NAME> --flavor <FLAVOR_NAME> --security-groups default --nic port-id=<PORT_ID> --nic net-id=<NET_NAME> --availability-zone <COMPUTE_NAME> --user-data <config_file>.xml --config-drive=true <VM_NAME>
+
+openstack server create --flavor <FLAVOR_NAME> --image <IMAGE_NAME> --nic net-id=<NIC ID> VM_NAME
