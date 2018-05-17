@@ -82,3 +82,20 @@ root@XXXXXX:~# docker ps -a
 
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 
+If any pods not removed properly
+
+kubectl delete pods nova-cell-setup-1525424400-cjdwb -n openstack
+
+root@XXXXX:~# kubectl get pods --all-namespaces
+
+NAMESPACE     NAME                              READY     STATUS    RESTARTS   AGE
+
+kube-system   etcd-megam-2                      1/1       Running   0          13d
+
+kube-system   kube-apiserver-megam-2            1/1       Running   0          13d
+
+kube-system   kube-controller-manager-megam-2   1/1       Running   0          13d
+
+kube-system   kube-proxy-jwcvx                  1/1       Running   0          13d
+
+kube-system   kube-scheduler-megam-2            1/1       Running   0          13d
