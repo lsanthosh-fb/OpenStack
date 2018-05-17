@@ -20,3 +20,10 @@ tiller             	1       	Thu May  3 14:51:04 2018	DEPLOYED	tiller-0.1.0     
 Removing the helm chart:-
 ========================
 set -X; for i in $(helm list | awk '{print $1}'); do helm delete $i --purge; done
+release "heat" deleted
+release "horizon" deleted
+release "ingress-kube-system" deleted
+release "ingress-openstack" deleted
+release "keystone" deleted
+release "kube-dns" deleted
+release "libvirt" deleted
