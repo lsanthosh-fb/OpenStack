@@ -1,5 +1,6 @@
 List the helm chart
 root@XXXXX:~# helm list 
+
 NAME               	REVISION	UPDATED                 	STATUS  	CHART                	NAMESPACE  
 glance             	1       	Thu May  3 17:02:03 2018	DEPLOYED	glance-0.1.0         	openstack  
 heat               	1       	Thu May  3 16:56:25 2018	DEPLOYED	heat-0.1.0           	openstack  
@@ -30,3 +31,27 @@ release "libvirt" deleted
 release "mariadb" deleted
 release "memcached" deleted
 release "neutron" deleted
+
+
+root@XXXXX:~# kubectl get pods -n kube-system
+NAME                              READY     STATUS    RESTARTS   AGE
+etcd-megam-2                      1/1       Running   0          13d
+kube-apiserver-megam-2            1/1       Running   0          13d
+kube-controller-manager-megam-2   1/1       Running   0          13d
+kube-proxy-jwcvx                  1/1       Running   0          13d
+kube-scheduler-megam-2            1/1       Running   0          13d
+
+sudo systemctl stop kubelet
+sudo systemctl disable kubelet
+
+Removing the containers:-
+=======================
+sudo docker ps -aq | xargs -r -L1 -P16 sudo docker rm -f
+
+sudo rm -rf /var/lib/openstack-helm/*
+
+sudo rm -rf /var/lib/nova/*
+sudo rm -rf /var/lib/libvirt/*
+sudo rm -rf /etc/libvirt/qemu/*
+
+sudo findmnt --raw | awk '/^\/var\/lib\/kubelet\/pods/ { print $1 }' | xargs -r -L1 -P16 sudo umount -f -l
