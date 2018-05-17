@@ -27,3 +27,5 @@ release "ingress-openstack" deleted
 release "keystone" deleted
 release "kube-dns" deleted
 release "libvirt" deleted
+release "mariadb" deleted
+release "memcached" deleted
