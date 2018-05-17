@@ -29,3 +29,4 @@ release "kube-dns" deleted
 release "libvirt" deleted
 release "mariadb" deleted
 release "memcached" deleted
+release "neutron" deleted
