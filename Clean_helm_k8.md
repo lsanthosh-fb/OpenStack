@@ -1,4 +1,5 @@
 List the helm chart
+
 root@XXXXX:~# helm list 
 
 NAME               	REVISION	UPDATED                 	STATUS  	CHART                	NAMESPACE  
@@ -76,3 +77,8 @@ sudo rm -rf /var/lib/libvirt/*
 sudo rm -rf /etc/libvirt/qemu/*
 
 sudo findmnt --raw | awk '/^\/var\/lib\/kubelet\/pods/ { print $1 }' | xargs -r -L1 -P16 sudo umount -f -l
+
+root@XXXXXX:~# docker ps -a
+
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
