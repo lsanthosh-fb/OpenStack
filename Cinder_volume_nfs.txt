@@ -194,3 +194,13 @@ tmpfs            26G     0   26G   0% /run/user/1000
 
 
 openstack-config --set /etc/cinder/cinder.conf DEFAULT nfs_shares_config /etc/cinder/nfsshares
+
+[nfs]
+volume_backend_name = nfs
+nfs_shares_config=/etc/cinder/nfsshares
+volume_driver = cinder.volume.drivers.nfs.NfsDriver
+
+[heat-admin@cloud-4-controller-0 ~]$ sudo cat /etc/cinder/nfsshares
+172.17.196.7:/mnt/cinder_storage
+[heat-admin@cloud-4-controller-0 ~]$
+
