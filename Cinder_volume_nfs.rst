@@ -204,3 +204,5 @@ volume_driver = cinder.volume.drivers.nfs.NfsDriver
 172.17.196.7:/mnt/cinder_storage
 [heat-admin@cloud-4-controller-0 ~]$
 
+[heat-admin@overcloud-compute-3 ~]$ cat /etc/exports
+/mnt/cinder_storage *(rw,no_root_squash)
