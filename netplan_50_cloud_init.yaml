@@ -3,7 +3,6 @@
 # To disable cloud-init's network configuration capabilities, write a file
 # /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
 # network: {config: disabled}
-```
 network:
     ethernets:
         eth0:
@@ -36,4 +35,4 @@ network:
                  - 8.8.8.8
                  search: []
     version: 2 
-    ```
+
