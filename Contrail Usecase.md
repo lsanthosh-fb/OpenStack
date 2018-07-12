@@ -33,11 +33,11 @@ SETUP & CONNECTIVITY
 		  |	|	     ||	| vSRX	      |	  ||		    |			     |
 		  |	+------------||-|	      |	  ||		    |	           	     |
 		  |		     ||	+-------------+	  ||		    +------------------------+
-		  |      	     ++===================++			    |
-		  |	Left		+-------------+			Right	          |
-		  +---------------------| Load Balancer    |-----------------------------+
-					|	      |
-					+-------------+
+		  |      	     ++===================++			      |
+		  |	Left		+---------------+			Right |
+		  +---------------------| Load Balancer |-----------------------------+
+					|	        |
+					+---------------+
 				       Service Instance II
 		
 ```
@@ -49,7 +49,7 @@ SETUP & CONNECTIVITY
 	- right 
 	- Availablity Zone
 	- Select the image/ Loadbalancer image
-	- 
+	
 2) Service Instances
 	- Select the service template
 	- Number of instances (Active - Active, Active-Standby or None)
