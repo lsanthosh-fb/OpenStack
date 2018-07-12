@@ -1,7 +1,6 @@
-Ubunut VM Instantation on Openstack
+**Ubunut VM Instantation on Openstack**
 
-List the IMAGE on Cloud
-=======================
+**List the IMAGE on Cloud**
 
 ```
 [xxxx@director ~]$ openstack image list 
@@ -9,24 +8,9 @@ List the IMAGE on Cloud
 | ID                                   | Name                                            | Status |
 +--------------------------------------+-------------------------------------------------+--------+
 | 65ce7343-8b76-4a39-bcc2-f6c4b6261d51 | RedHat                                          | active |
-| 5df0f59f-b6a1-49c0-80ac-b8fec5aabf0c | SevOne_Collector                                | active |
-| 091f3e4a-6e2b-4ae0-b584-c9a05b933b77 | SevOne_vPAS5K                                   | active |
 | 9b200832-0a85-4863-b63e-0c9ee0a0da98 | Ubuntu_Xenial                                   | active |
 | dbdd504d-09f5-4481-9eed-d096558d38d0 | Windows-Server-2012-R2-Std-Eval                 | active |
-| 0312dbd7-5fdf-496c-8955-17075af93dcb | an-6.6.4.2-33.REL                               | active |
-| b440a8de-c39b-4c5a-b111-9ee184d96fb6 | an-6.6.4.2-33.REL-payload                       | active |
-| f94a87a2-5d3b-4909-bc72-b4fe0cdd6b10 | an-ems-v1.2-rhel-server-6.8-x86_64-mysql-5.6.31 | active |
 | 25e64422-8df0-4366-a99f-2915033f53ee | cirros                                          | active |
-| b4af984f-4d29-4398-bedd-1f4d335ef690 | vBBU                                            | active |
-| 90a64de9-aa4b-4a11-8962-8d984c332d7c | vHSS                                            | active |
-| d2b98a8b-902e-4649-b4a3-051dd3eea83d | vIMS-SBC                                        | active |
-| 36f1055c-6c74-4fe6-b53e-123123bbb768 | vMME                                            | active |
-| caad6f94-ede9-4709-aa93-2b4c5caa1a03 | vOCOM                                           | active |
-| 4576553f-2637-454e-a8fd-8faa7da1045b | vPCRF                                           | active |
-| 1e05f0dc-2b8e-4e0d-84de-fe17ca2ecc03 | vng1-6010-b329-boot                             | active |
-| 00d71a15-4272-4de0-943e-12aa5f74902a | vng1-6010-b329-store                            | active |
-| 71d3dc86-9db1-49f3-aab4-58a8f1e0f06d | vstream-6010-b245-boot                          | active |
-| 48727f79-c9c9-4130-9078-2348d19f254b | vstream-6010-b245-store                         | active |
 +--------------------------------------+-------------------------------------------------+--------+
 [xxxx@director ~]$ 
 
@@ -134,8 +118,8 @@ Creating the VM with dependent arugemnts
 | d8e156a7-fa6b-41a7-8d3e-8a9cd3026745 | Ubuntu_Dock          | BUILD   | spawning   | NOSTATE     | CLOUD1-OAM-NET=10.101.200.34; CLOUD1-PRI-PROVIDER-NET=172.17.129.26                                                                                                                        |
 ```
 
-Verify VM status 
-================
+**Verify VM status **
+
 ```
 [xxxx@director ~]$ nova list | grep Dock
 | d8e156a7-fa6b-41a7-8d3e-8a9cd3026745 | Ubuntu_Dock          | ACTIVE  | -          | Running     | CLOUD1-OAM-NET=10.101.200.34; CLOUD1-PRI-PROVIDER-NET=172.17.129.26      |
