@@ -1,4 +1,10 @@
-[techm@director ~]$ openstack image list 
+Ubunut VM Instantation on Openstack
+
+List the IMAGE on Cloud
+=======================
+
+```
+[xxxx@director ~]$ openstack image list 
 +--------------------------------------+-------------------------------------------------+--------+
 | ID                                   | Name                                            | Status |
 +--------------------------------------+-------------------------------------------------+--------+
@@ -22,16 +28,31 @@
 | 71d3dc86-9db1-49f3-aab4-58a8f1e0f06d | vstream-6010-b245-boot                          | active |
 | 48727f79-c9c9-4130-9078-2348d19f254b | vstream-6010-b245-store                         | active |
 +--------------------------------------+-------------------------------------------------+--------+
-[techm@director ~]$ 
-[techm@director ~]$ 
-[techm@director ~]$ openstack image list  | grep -i ubuntu
+[xxxx@director ~]$ 
+
+```
+```
+[xxxx@director ~]$ openstack image list  | grep -i ubuntu
 | 9b200832-0a85-4863-b63e-0c9ee0a0da98 | Ubuntu_Xenial                                   | active |
-[techm@director ~]$ 
-[techm@director ~]$ 
-[techm@director ~]$ openstack network list | grep OAM
+[xxxx@director ~]$ 
+```
+**Filter the Network that you wanted to attach with VM**
+
+```
+[xxxx@director ~]$ openstack network list | grep -i provider
+| 96f441d8-0905-4adb-aba4-3820cb4a8377 | CLOUD1-PUB-PROVIDER-NET | 96bcfdea-277c-41bc-9757-6fefe6dcd7d8 |
+| ae3f3381-8584-4356-b461-3f76349f7ad0 | CLOUD1-PRI-PROVIDER-NET | 73bbfc12-0b50-4bd0-8d16-9aef60ec8129 |
+[xxxx@director ~]$ 
+[xxxx@director ~]$ openstack network list | grep -i OAM
 | 771f946f-e0cd-4ccc-beac-52cdf1d80e67 | CLOUD1-OAM-NET          | 9a3f1f48-1397-4fe2-bb92-a3faafbc8d4c |
-[techm@director ~]$ 
-[techm@director ~]$ openstack flavor list 
+[xxxx@director ~]$ 
+
+```
+
+**List the Flavour**
+
+```
+[xxxxx@director ~]$ openstack flavor list 
 +--------------------------------------+---------------+-------+------+-----------+-------+-----------+
 | ID                                   | Name          |   RAM | Disk | Ephemeral | VCPUs | Is Public |
 +--------------------------------------+---------------+-------+------+-----------+-------+-----------+
@@ -56,15 +77,11 @@
 | eb7d9d02-e513-44bb-9b57-7b61ff1c725f | 16c32r550d    | 32768 |  550 |         0 |    16 | True      |
 | fa772a50-ea9b-44de-ab99-519fcba1bed0 | 8c28r50d      | 28672 |   50 |         0 |     8 | True      |
 +--------------------------------------+---------------+-------+------+-----------+-------+-----------+
-[techm@director ~]$ openstack network list | grep -i provider
-| 96f441d8-0905-4adb-aba4-3820cb4a8377 | CLOUD1-PUB-PROVIDER-NET | 96bcfdea-277c-41bc-9757-6fefe6dcd7d8 |
-| ae3f3381-8584-4356-b461-3f76349f7ad0 | CLOUD1-PRI-PROVIDER-NET | 73bbfc12-0b50-4bd0-8d16-9aef60ec8129 |
-[techm@director ~]$ 
-[techm@director ~]$ openstack network list | grep -i OAM
-| 771f946f-e0cd-4ccc-beac-52cdf1d80e67 | CLOUD1-OAM-NET          | 9a3f1f48-1397-4fe2-bb92-a3faafbc8d4c |
-[techm@director ~]$ 
-[techm@director ~]$ 
-[techm@director ~]$ nova boot --flavor 8c8r200d --image Ubuntu_Xenial  --nic net-id=771f946f-e0cd-4ccc-beac-52cdf1d80e67  --nic net-id=ae3f3381-8584-4356-b461-3f76349f7ad0 --security-group default Ubuntu_Dock
+```
+Creating the VM with dependent arugemnts
+=========================================
+```
+[xxxx@director ~]$ nova boot --flavor 8c8r200d --image Ubuntu_Xenial  --nic net-id=771f946f-e0cd-4ccc-beac-52cdf1d80e67  --nic net-id=ae3f3381-8584-4356-b461-3f76349f7ad0 --security-group default Ubuntu_Dock
 +--------------------------------------+------------------------------------------------------+
 | Property                             | Value                                                |
 +--------------------------------------+------------------------------------------------------+
@@ -109,10 +126,18 @@
 | updated                              | 2018-03-01T19:18:46Z                                 |
 | user_id                              | a208593ca78f47dda14b62fe12e40e35                     |
 +--------------------------------------+------------------------------------------------------+
-[techm@director ~]$ 
-[techm@director ~]$ 
-[techm@director ~]$ nova list | grep Dock
-| d8e156a7-fa6b-41a7-8d3e-8a9cd3026745 | Ubuntu_Dock          | BUILD   | spawning   | NOSTATE     | CLOUD1-OAM-NET=10.101.200.34; CLOUD1-PRI-PROVIDER-NET=172.17.129.26                                                                                                                          |
-[techm@director ~]$ nova list | grep Dock
-| d8e156a7-fa6b-41a7-8d3e-8a9cd3026745 | Ubuntu_Dock          | ACTIVE  | -          | Running     | CLOUD1-OAM-NET=10.101.200.34; CLOUD1-PRI-PROVIDER-NET=172.17.129.26                                                                                                                          |
-[techm@director ~]$ 
+```
+
+**Build after nova boot**
+```
+[xxxx@director ~]$ nova list | grep Dock
+| d8e156a7-fa6b-41a7-8d3e-8a9cd3026745 | Ubuntu_Dock          | BUILD   | spawning   | NOSTATE     | CLOUD1-OAM-NET=10.101.200.34; CLOUD1-PRI-PROVIDER-NET=172.17.129.26                                                                                                                        |
+```
+
+Verify VM status 
+================
+```
+[xxxx@director ~]$ nova list | grep Dock
+| d8e156a7-fa6b-41a7-8d3e-8a9cd3026745 | Ubuntu_Dock          | ACTIVE  | -          | Running     | CLOUD1-OAM-NET=10.101.200.34; CLOUD1-PRI-PROVIDER-NET=172.17.129.26      |
+```
+ 
