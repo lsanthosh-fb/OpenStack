@@ -62,8 +62,8 @@
 | fa772a50-ea9b-44de-ab99-519fcba1bed0 | 8c28r50d      | 28672 |   50 |         0 |     8 | True      |
 +--------------------------------------+---------------+-------+------+-----------+-------+-----------+
 ```
-Creating the VM with dependent arugemnts
-=========================================
+**Creating the VM with dependent arugments**
+
 ```
 [xxxx@director ~]$ nova boot --flavor 8c8r200d --image Ubuntu_Xenial  --nic net-id=771f946f-e0cd-4ccc-beac-52cdf1d80e67  --nic net-id=ae3f3381-8584-4356-b461-3f76349f7ad0 --security-group default Ubuntu_Dock
 +--------------------------------------+------------------------------------------------------+
@@ -118,7 +118,7 @@ Creating the VM with dependent arugemnts
 | d8e156a7-fa6b-41a7-8d3e-8a9cd3026745 | Ubuntu_Dock          | BUILD   | spawning   | NOSTATE     | CLOUD1-OAM-NET=10.101.200.34; CLOUD1-PRI-PROVIDER-NET=172.17.129.26                                                                                                                        |
 ```
 
-**Verify VM status **
+**Verify VM status**
 
 ```
 [xxxx@director ~]$ nova list | grep Dock
