@@ -1,4 +1,5 @@
-Verify the disk filesystem :-
+Verify the disk filesystem:
+===========================
 
 [heat-admin@overcloud-compute-3 ~]$ sudo df -h
 Filesystem      Size  Used Avail Use% Mounted on
