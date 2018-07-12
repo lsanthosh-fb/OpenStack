@@ -1,8 +1,7 @@
-=======================
-Lab SETUP
-=======================
+USECASE
+==========
 
-
+```
 +---------------+	    +------------+	      +------------+	        +---------------+
 |  Contrail     |   BGP     | SDN GW     |	      | SDN GW     |    BGP	| Contrail	|
 |  Controller   |-----------| vMX        |------------|  vMX       |----------- | Controller    |         	
@@ -14,10 +13,14 @@ Lab SETUP
 | vRouter Agent	 |---------------+				+---------------| vRouter Agent	   |
 | Compute Node   | MPLS Over GRE				MPLS Over GRE	| Compute Node	   |
 +----------------+								+------------------+
-		
-=====================================
 
- - Service Instance Use cases
+```
+
+
+ Service Instance Use cases
+ ==========================
+ 
+ ```
  
 					Service Instance I
 		 		     ++===================++		    +------------------------+
@@ -37,20 +40,23 @@ Lab SETUP
 					+-------------+
 				       Service Instance II
 		
-======================================
-1) Service Templates 
+```
+
+**1) Service Templates 
 	- Network Type (In NetworK, In Network with NAT, Transparent)
 	- Management 
 	- Left 
 	- right 
 	- Availablity Zone
 	- Select the image/ Loadbalancer image
+**
 	- 
-2) Service Instances
+**2) Service Instances
 	- Select the service template
 	- Number of instances (Active - Active, Active-Standby or None)
 	- Configure the interfaces (Management, Left and Right with UP / Auto Configured) 
+**
 
-3) Service Policy
-	- Create Policy - Service chain policy = PASS ANY 172.16.90.0/24 DEST 
-	
+**3) Service Policy
+	- Create Policy - Service chain policy = PASS ANY 172.16.90.0/24 DEST
+**
