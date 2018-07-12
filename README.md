@@ -18,17 +18,36 @@ Flavour creation:-
 ================
 nova flavor-create <FLAVOR_NAME> auto 32768 50 8
 
+openstack flavor create --ram <Memory Size in Bytes> --disk <DISK SIZE in GB> --vcpus <NO OF CPUs> --public <FLAVOR_NAME>
+
+**Example**
+```
 openstack flavor create --ram 32768 --disk 550 --vcpus 16 --public 16c32r550d
+
+```
 
 Network Creation:-
 =================
-neutron net-create CLOUD1-GW-BASE-INT-NET --shared
+neutron net-create <NETWORK_NAME> --shared
 
-openstack subnet create <SUBNET_NAME> --project <PROJECT_ID> --subnet-range 10.101.200.0/24 --allocation-pool start=10.101.200.11,end=10.101.200.100 --gateway 10.101.200.1 --network <NET_NAME> --service-type 'compute:nova'
+**Example**
+
+```
+openstack network create --provider-network-type vlan --provider-physical-network datacentre --external --provider-segment 103 --share PRI-PROVIDER-NET
+
+```
+
 
 Subnet Creation:-
 ===============
 neutron subnet-create --allocation-pool start=10.101.101.11,end=10.101.101.100 --gateway 10.101.101.1 --enable-dhcp <NET NAME> 10.101.101.0/24 --name <SUBNET NAME>
+  
+**Example**
+
+```
+openstack subnet create <SUBNET_NAME> --project <PROJECT_ID> --subnet-range 10.101.200.0/24 --allocation-pool start=10.101.200.11,end=10.101.200.100 --gateway 10.101.200.1 --network <NET_NAME> --service-type 'compute:nova'
+
+```
 
 Port Creation:-
 ==============
