@@ -12,9 +12,10 @@ tmpfs           126G     0  126G   0% /sys/fs/cgroup
 tmpfs            26G     0   26G   0% /run/user/1000
 ```
 
-Check the available disk
-
-[heat-admin@overcloud-compute-3 /]$ sudo fdisk -l 
+Check the available disk:
+=========================
+''''
+[heat-admin@compute-3 /]$ sudo fdisk -l 
 WARNING: fdisk GPT support is currently new, and therefore in an experimental phase. Use at your own discretion.
 
 Disk /dev/sda: 3999.7 GB, 3999688294400 bytes, 7811891200 sectors
@@ -43,9 +44,11 @@ Disk /dev/sdc: 599.6 GB, 599550590976 bytes, 1170997248 sectors
 Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
+''''
 
 Format the block disk:-
-
+======================
+''''
 [heat-admin@overcloud-compute-3 ~]$ sudo fdisk /dev/sdc
 Welcome to fdisk (util-linux 2.23.2).
 
@@ -149,8 +152,11 @@ Calling ioctl() to re-read partition table.
 Syncing disks.
 [heat-admin@overcloud-compute-3 ~]$
 
-Make File System with ext3 
+''''
 
+Make File System with ext3 
+==========================
+''''
 [heat-admin@overcloud-compute-3 ~]$ sudo mkfs.ext3 /dev/sdc
 mke2fs 1.42.9 (28-Dec-2013)
 /dev/sdc is entire device, not just one partition!
@@ -178,18 +184,31 @@ Creating journal (32768 blocks): done
 Writing superblocks and filesystem accounting information:          
 done
 
-Note the Block ID of that disk 
+''''
 
+Note the Block ID of that disk 
+===============================
+
+''''
 [heat-admin@overcloud-compute-3 ~]$ sudo blkid /dev/sdc
 /dev/sdc: UUID="942c19b5-c5d3-49e3-a097-57f431ef3034" SEC_TYPE="ext2" TYPE="ext3"
+''''
 
 Create the mount point Directory:-
+===================================
+''''
 [heat-admin@overcloud-compute-3 mnt]$ sudo mkdir -p cinder_storage
+''''
 
 Mount the Block Disk to mount point:-
+====================================
+''''
 [heat-admin@overcloud-compute-3 cinder_storage]$ sudo mount /dev/sdc /mnt/cinder_storage
+''''
 
 Verify the disk filesystem :-
+============================
+''''
 [heat-admin@overcloud-compute-3 mnt]$ df -h
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/sda2       3.7T   24G  3.7T   1% /
@@ -199,8 +218,11 @@ tmpfs           126G  1.5M  126G   1% /run
 tmpfs           126G     0  126G   0% /sys/fs/cgroup
 tmpfs            26G     0   26G   0% /run/user/1000
 /dev/sdc        550G   70M  522G   1% /mnt/cinder_storage
- 
+''''
+
 Cinder configuration Change for NFS:- 
+====================================
+''''
 openstack-config --set /etc/cinder/cinder.conf DEFAULT nfs_shares_config /etc/cinder/nfsshares
 
 [nfs]
@@ -213,3 +235,4 @@ volume_driver = cinder.volume.drivers.nfs.NfsDriver
 
 [heat-admin@overcloud-compute ~]$ cat /etc/exports
 /mnt/cinder_storage *(rw,no_root_squash)
+''''
