@@ -8,8 +8,7 @@ glance image-create --name <name> --disk-format qcow2 --container-format bare --
   
 openstack image create --disk-format qcow2 --container-format bare  --public --property hypervisor_type=qemu --property os_type=<windows> --file ./<file_name>.qcow2 <IMAGE_NAME>
   
-Example:
-=======
+*example*
 ```
 openstack image create --disk-format qcow2 --container-format bare --public --file ubuntu.qcow2 ubuntu_18_04
 
