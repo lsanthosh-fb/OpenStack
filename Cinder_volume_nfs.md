@@ -1,7 +1,8 @@
 Verify the disk filesystem:
 ===========================
 
-[heat-admin@overcloud-compute-3 ~]$ sudo df -h
+```
+[heat-admin@compute]$ sudo df -h
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/sda2       3.7T   24G  3.7T   1% /
 devtmpfs        126G     0  126G   0% /dev
@@ -9,6 +10,7 @@ tmpfs           126G     0  126G   0% /dev/shm
 tmpfs           126G  1.5M  126G   1% /run
 tmpfs           126G     0  126G   0% /sys/fs/cgroup
 tmpfs            26G     0   26G   0% /run/user/1000
+```
 
 Check the available disk
 
