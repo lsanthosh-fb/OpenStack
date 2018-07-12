@@ -14,7 +14,7 @@ tmpfs            26G     0   26G   0% /run/user/1000
 
 Check the available disk:
 =========================
-''''
+'''
 [heat-admin@compute-3 /]$ sudo fdisk -l 
 WARNING: fdisk GPT support is currently new, and therefore in an experimental phase. Use at your own discretion.
 
@@ -44,7 +44,7 @@ Disk /dev/sdc: 599.6 GB, 599550590976 bytes, 1170997248 sectors
 Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
-''''
+'''
 
 Format the block disk:-
 ======================
