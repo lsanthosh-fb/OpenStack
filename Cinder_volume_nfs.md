@@ -218,21 +218,71 @@ tmpfs           126G  1.5M  126G   1% /run
 tmpfs           126G     0  126G   0% /sys/fs/cgroup
 tmpfs            26G     0   26G   0% /run/user/1000
 /dev/sdc        550G   70M  522G   1% /mnt/cinder_storage
+
 ```
+NFS Server Configuration:
+=========================
+
+**Verify nfs packages are in place on Server as well as Client**
+
+```
+rpm -qa | grep nfs-utils
+
+```
+
+**If not install based on your Linux Distro**
+```
+yum -y install nfs-utils
+
+systemctl enable nfs-server.service
+systemctl start nfs-server.service
+
+```
+**Export file will allow the remote permission**
+
+```
+[heat-admin@overcloud-compute ~]$ cat /etc/exports
+/mnt/cinder_storage *(rw,no_root_squash)
+
+[heat-admin@overcloud-compute ~]$ exportfs -a
+
+```
+
+Mount the remote Volume in Local
+==================================
+```
+sudo mkdir -p cinder_remote
+
+sudo mount -t nfs -o rw,nosuid 172.17.132.8:/mnt/cinder_storage /cinder_remote
+```
+
 
 Cinder configuration Change for NFS:- 
 ====================================
+
+**verify the services in openstack related to Cinder**
+```
+  sudo systemctl status openstack-cinder-volume.service
+  sudo systemctl status openstack-cinder-scheduler.service
+  sudo systemctl status openstack-cinder-backup.service
+```
+
 ```
 openstack-config --set /etc/cinder/cinder.conf DEFAULT nfs_shares_config /etc/cinder/nfsshares
+```
+**Add the below lines in /etc/cinder/cinder.conf for NFS volumes to use Cinder**
+```
+enabled_backends = tripleo_iscsi,nfs
 
 [nfs]
 volume_backend_name = nfs
 nfs_shares_config=/etc/cinder/nfsshares
 volume_driver = cinder.volume.drivers.nfs.NfsDriver
-
+```
+**File contains the remote volume location**
+```
 [heat-admin@cloud-controller ~]$ sudo cat /etc/cinder/nfsshares
 172.17.196.7:/mnt/cinder_storage
-
-[heat-admin@overcloud-compute ~]$ cat /etc/exports
-/mnt/cinder_storage *(rw,no_root_squash)
 ```
+
+
