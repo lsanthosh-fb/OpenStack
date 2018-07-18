@@ -196,6 +196,8 @@ Note the Block ID of that disk
 
 Create the mount point Directory:-
 ===================================
+Directory permission need to set cinder:cinder to access the files and folders.
+
 ```
 [heat-admin@overcloud-compute-3 mnt]$ sudo mkdir -p cinder_storage
 ```
@@ -250,6 +252,9 @@ systemctl start nfs-server.service
 
 Mount the remote Volume in Local
 ==================================
+
+Clear the iptables -F if any firewall issue that will easily mount NFS 
+
 ```
 sudo mkdir -p cinder_remote
 
