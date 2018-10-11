@@ -1,0 +1,25 @@
+[stack@xxxx~]$ guestfish --rw -a ./rhel-server-7.5-update-4-x86_64-kvm.qcow2 
+
+Welcome to guestfish, the guest filesystem shell for
+editing virtual machine filesystems and disk images.
+
+Type: 'help' for help on commands
+      'man' to read the manual
+      'quit' to quit the shell
+
+><fs> run
+ 100% ⟦▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒⟧ 00:00
+><fs> list-filesystems
+/dev/sda1: xfs
+><fs> mount /dev/sda1 /
+><fs> vi /etc/shadow
+><fs> 
+><fs> quit
+
+[stack@xxxx ~]$ 
+
+root@JUMPER-2:~# openssl passwd -1 techm123
+$1$m80q7UGV$/j08gGHHAh9p6WsY0UIKK1
+root@JUMPER-2:~# 
+root@JUMPER-2:~# vi /etc/shadow
+root@JUMPER-2:~#
