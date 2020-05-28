@@ -1,15 +1,7 @@
 Lab 2a Configuration :-
 ==========================
 
-1) RHEL Server 7.3 installation Done 
-	username :- admin 
-	password :- techmlab2
-	
-	root pw :- techmlab2
-	
-	Hostname :- techmlab2-common 
-	
-2) IP Address assignment - Internet access
+IP Address assignment - Internet access
 
 yum install xorg-x11-xauth xorg-x11-fonts-* xorg-x11-utils
 
